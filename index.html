@@ -52,7 +52,6 @@
       border-radius: 3px;
     }
 
-    /* Decorative corner nails */
     .nail {
       width: 10px;
       height: 10px;
@@ -102,7 +101,6 @@
       box-shadow: inset 0 0 18px rgba(0,0,0,0.25);
     }
 
-    /* Classic Roblox Noob Style SVG */
     .noob-svg {
       width: 95px;
       height: 95px;
@@ -203,7 +201,7 @@
     }
 
     .roast-toast {
-      min-height: 36px;
+      min-height: 44px;
       font-size: 0.9rem;
       font-weight: bold;
       color: var(--crimson);
@@ -212,14 +210,13 @@
       justify-content: center;
       margin-bottom: 8px;
       padding: 0 6px;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
-    /* Arena where the button runs around */
     .button-arena {
       position: relative;
       width: 100%;
-      height: 145px;
+      height: 165px;
       border: 1px dashed rgba(43, 29, 14, 0.4);
       background: rgba(0, 0, 0, 0.03);
       display: flex;
@@ -260,7 +257,7 @@
       position: absolute;
       bottom: 16px;
       z-index: 10;
-      transition: left 0.14s ease-out, top 0.14s ease-out, background-color 0.2s;
+      transition: left 0.11s ease-out, top 0.11s ease-out, background-color 0.2s;
     }
 
     .btn-busy.surrendered {
@@ -268,7 +265,6 @@
       border-style: dashed;
     }
 
-    /* Outcome Modal Screen */
     .result-panel {
       display: none;
       padding: 18px 10px;
@@ -316,21 +312,14 @@
     <div class="sub-header">Missing Roblox Teammate</div>
 
     <div class="mugshot-box">
-      <!-- Retro Roblox Blocky Avatar SVG -->
       <svg class="noob-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Head -->
         <rect x="33" y="10" width="34" height="32" rx="5" fill="#d4b24c" stroke="#2b1d0e" stroke-width="3"/>
-        <!-- Top Stud -->
         <rect x="42" y="5" width="16" height="5" fill="#d4b24c" stroke="#2b1d0e" stroke-width="2.5"/>
-        <!-- Classic Roblox Smile & Eyes -->
         <circle cx="43" cy="23" r="2.8" fill="#2b1d0e"/>
         <circle cx="57" cy="23" r="2.8" fill="#2b1d0e"/>
         <path d="M 41 32 Q 50 39 59 32" stroke="#2b1d0e" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <!-- Torso -->
         <rect x="26" y="43" width="48" height="44" fill="#3b5e8c" stroke="#2b1d0e" stroke-width="3"/>
-        <!-- Left Arm -->
         <rect x="9" y="43" width="16" height="40" fill="#d4b24c" stroke="#2b1d0e" stroke-width="3"/>
-        <!-- Right Arm -->
         <rect x="75" y="43" width="16" height="40" fill="#d4b24c" stroke="#2b1d0e" stroke-width="3"/>
       </svg>
       <div class="stamp" id="statusStamp">STATUS: TOUCHING GRASS</div>
@@ -343,7 +332,7 @@
       <div class="crimes-title">Official Sheriff Charges</div>
       <ul class="crimes-list">
         <li>Vanishing from Roblox servers for 2 whole days without a trace.</li>
-        <li>Leaving her squadmate to suffer in public lobbies with chaotic randoms.</li>
+        <li>Leaving her squadmate to suffer in public lobbies with 8-year-old Bacon Hairs.</li>
         <li>Causing a catastrophic 99.9% drop in server survival & win rate.</li>
       </ul>
     </div>
@@ -353,7 +342,6 @@
       <div class="bounty-amount">1,000,000 Imaginary Robux + 1 Free Carry</div>
     </div>
 
-    <!-- Interactive Area -->
     <div id="interactiveSection">
       <div class="roast-toast" id="roastText">How do you plead, outlaw? Lobby tonight?</div>
 
@@ -363,7 +351,6 @@
       </div>
     </div>
 
-    <!-- Final Message Screen -->
     <div class="result-panel" id="resultPanel">
       <h3 id="resultTitle"></h3>
       <p id="resultDesc"></p>
@@ -383,7 +370,7 @@
       counterEl.textContent = `TIME OFFLINE: ${hrs} HRS : ${mins} MIN : ${secs} SEC`;
     }, 1000);
 
-    // --- 2. Lightweight Retro Web Audio Synth (No external MP3 needed) ---
+    // --- 2. Retro Web Audio Synth ---
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
 
@@ -399,12 +386,12 @@
         const now = audioCtx.currentTime;
         if (type === 'dodge') {
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(300, now);
-          osc.frequency.exponentialRampToValueAtTime(650, now + 0.09);
+          osc.frequency.setValueAtTime(320, now);
+          osc.frequency.exponentialRampToValueAtTime(700, now + 0.08);
           gain.gain.setValueAtTime(0.15, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.09);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
           osc.start(now);
-          osc.stop(now + 0.09);
+          osc.stop(now + 0.08);
         } else if (type === 'win') {
           osc.type = 'square';
           osc.frequency.setValueAtTime(440, now);
@@ -415,12 +402,10 @@
           osc.start(now);
           osc.stop(now + 0.35);
         }
-      } catch (e) {
-        // Ignore if browser blocks audio
-      }
+      } catch (e) {}
     }
 
-    // --- 3. The 10-Dodge Runaway Button Logic ---
+    // --- 3. The 20-Dodge Runaway Button Logic ---
     const busyBtn = document.getElementById('busyBtn');
     const acceptBtn = document.getElementById('acceptBtn');
     const arena = document.getElementById('arena');
@@ -433,26 +418,35 @@
     const copyBtn = document.getElementById('copyBtn');
 
     let dodgeCount = 0;
-    const maxDodges = 10;
+    const maxDodges = 20;
     let receiptMessage = "";
 
     const roasts = [
-      "1/10: Whoa, nice try! High ping?",
-      "2/10: Skill issue. The green button is right there.",
-      "3/10: Bro equipped the speed coil to dodge lobbies.",
-      "4/10: Public server randoms are terrible, save me!",
-      "5/10: Halfway there... your Obby reflexes are rusty.",
-      "6/10: Still clicking red? Bold strategy.",
-      "7/10: Even the Roblox servers aren't lagging this hard.",
-      "8/10: Relentless! You really want that AFK pass.",
-      "9/10: One more try and the Sheriff gives up...",
-      "10/10: Alright fine, respect the grind. Button unlocked!"
+      "1/20: Missed! Aiming like a lagging mobile player.",
+      "2/20: Two whole days offline and your thumb already forgot how to aim?",
+      "3/20: Did you equip the Roblox Speed Coil just to dodge my lobby?",
+      "4/20: A random Bacon Hair yesterday asked me if I had Robux. This is your fault.",
+      "5/20: Still trying to tap red? Major skill issue.",
+      "6/20: This button has better movement than both of us in an Obby.",
+      "7/20: Are you allergic to winning, or just scared of carrying me?",
+      "8/20: 999ms ping reflexes right there. Tap the green one!",
+      "9/20: You've spent more energy chasing this button than logging into Roblox.",
+      "10/20: Halfway to 20! Honestly, I respect the stubbornness.",
+      "11/20: My solo-queue teammates have the IQ of a decorative houseplant. Help.",
+      "12/20: *OOF!* Missed again.",
+      "13/20: Even Roblox servers don't crash as hard as your accuracy right now.",
+      "14/20: Plot twist: This button is actually the final boss.",
+      "15/20: 15 tries?! You are working harder to stay AFK than actual pro players.",
+      "16/20: Touching grass for 48 hours really ruined your gaming mechanics.",
+      "17/20: Wait, are you using an auto-clicker or just pure determination?",
+      "18/20: Almost there... the Sheriff is getting dizzy watching you chase this.",
+      "19/20: Last dodge! One more tap and I legally have to give you a pass...",
+      "20/20: ALRIGHT YOU WIN! 20/20 survived. The AFK button has surrendered!"
     ];
 
     function dodgeButton(e) {
-      if (dodgeCount >= maxDodges) return; // Surrendered! Allow normal click
+      if (dodgeCount >= maxDodges) return;
 
-      // Prevent accidental tap on mobile screens while dodging
       if (e.type === 'touchstart') {
         e.preventDefault();
       }
@@ -461,7 +455,6 @@
       roastText.textContent = roasts[dodgeCount];
       dodgeCount++;
 
-      // Calculate safe random coordinates inside the arena
       const arenaWidth = arena.clientWidth;
       const arenaHeight = arena.clientHeight;
       const btnWidth = busyBtn.offsetWidth;
@@ -477,22 +470,19 @@
       busyBtn.style.top = `${randomY}px`;
       busyBtn.style.bottom = 'auto';
 
-      // Subtle grow on the green button
-      const scale = 1 + (dodgeCount * 0.025);
+      // Gradual scale up over 20 dodges
+      const scale = 1 + (dodgeCount * 0.012);
       acceptBtn.style.transform = `scale(${scale})`;
 
-      // Unlock on the 10th dodge
       if (dodgeCount === maxDodges) {
         busyBtn.textContent = "Claim Official AFK Pass";
         busyBtn.classList.add('surrendered');
       }
     }
 
-    // Trigger dodge on hover (desktop) and touch (mobile)
     busyBtn.addEventListener('mouseover', dodgeButton);
     busyBtn.addEventListener('touchstart', dodgeButton, { passive: false });
 
-    // Click handler for "Still Busy" (Only fires after 10 dodges)
     busyBtn.addEventListener('click', () => {
       if (dodgeCount < maxDodges) {
         dodgeButton(new Event('click'));
@@ -503,11 +493,10 @@
       interactiveSection.style.display = 'none';
       resultPanel.style.display = 'block';
       resultTitle.textContent = "FAIR ENOUGH, YOU WIN!";
-      resultDesc.textContent = "You survived all 10 dodges. You are officially excused from the lobby today—catch you on Roblox whenever you're free!";
-      receiptMessage = "📜 [SHERIFF RECEIPT]: I survived all 10 button dodges and claimed my Official AFK Pass. Catch you on Roblox next time!";
+      resultDesc.textContent = "You actually chased a button 20 times just to stay offline. Respect the grind—you are officially excused today. Catch you on Roblox whenever you're free!";
+      receiptMessage = "📜 [SHERIFF RECEIPT]: I chased the red button all 20 times and claimed my Official AFK Pass. Catch you on Roblox next time!";
     });
 
-    // Click handler for "Hop on Roblox"
     acceptBtn.addEventListener('click', () => {
       playSound('win');
       statusStamp.textContent = "BOUNTY CLAIMED";
@@ -515,11 +504,10 @@
       interactiveSection.style.display = 'none';
       resultPanel.style.display = 'block';
       resultTitle.textContent = "BOUNTY OFFICIALLY CLAIMED!";
-      resultDesc.textContent = "The Sheriff has dropped all AFK charges. Fire up Roblox and send the lobby invite!";
-      receiptMessage = "🤠 [BOUNTY CLAIMED]: Turning myself in! Hopping on Roblox—drop the lobby invite.";
+      resultDesc.textContent = `The Sheriff has dropped all AFK charges (after ${dodgeCount} dodge attempts). Fire up Roblox and send the lobby invite!`;
+      receiptMessage = `🤠 [BOUNTY CLAIMED]: Turning myself in after ${dodgeCount} button dodges! Hopping on Roblox—drop the lobby invite.`;
     });
 
-    // Copy receipt button so she can easily paste it back to you in chat
     copyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(receiptMessage).then(() => {
         copyBtn.textContent = "Copied! Paste it in chat ✓";
