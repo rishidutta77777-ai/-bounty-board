@@ -386,7 +386,6 @@
       background-color: var(--crimson);
       color: #fff;
       z-index: 9000;
-      /* Smooth gliding animation so she sees it physically run across the screen */
       transition: left 0.28s cubic-bezier(0.25, 1, 0.5, 1), top 0.28s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s ease, background-color 0.2s;
     }
 
@@ -450,28 +449,39 @@
       font-size: 0.88rem;
       color: #bdbebe;
       line-height: 1.45;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
-    .captcha-label {
-      display: flex;
-      align-items: center;
-       gap: 10px;
-      background: #191a1c;
-      padding: 12px;
+    /* Bracketed CAPTCHA Prompt & Text Input */
+    .captcha-target-box {
+      background: #141516;
+      border: 1px dashed #ffdf6b;
+      padding: 10px 12px;
       border-radius: 6px;
-      border: 1px solid #555;
-      margin-bottom: 16px;
-      text-align: left;
-      font-size: 0.85rem;
-      cursor: pointer;
-      color: #fff;
+      margin-bottom: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.84rem;
+      color: #ffdf6b;
+      line-height: 1.4;
+      word-break: break-word;
     }
 
-    .captcha-label input {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
+    .captcha-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #666;
+      background: #191a1c;
+      color: #fff;
+      font-size: 0.86rem;
+      margin-bottom: 14px;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .captcha-input:focus {
+      border-color: #ffdf6b;
     }
 
     .roblox-btn {
@@ -550,11 +560,11 @@
   <div class="modal-overlay" id="captchaModal">
     <div class="roblox-modal">
       <h4>🤖 Anti-Cap Security Check</h4>
-      <p>Hold on! To prove you aren't a bot dodging my lobby, check the box below to unlock the final 2 dodges:</p>
-      <label class="captcha-label">
-        <input type="checkbox" id="captchaCheck">
-        <span>I admit I am scared of losing in Roblox and my excuses are 100% cap.</span>
-      </label>
+      <p>Hold on! To prove you aren't a bot dodging my lobby, type the exact phrase inside the brackets below to unlock the final 2 dodges:</p>
+      <div class="captcha-target-box">
+        [ I admit I am scared of losing in Roblox and my excuses are 100% cap ]
+      </div>
+      <input type="text" id="captchaInput" class="captcha-input" placeholder="Type the text inside [ ] here..." autocomplete="off">
       <button class="roblox-btn" id="captchaSubmitBtn" disabled>Verify & Unlock Final 2 Dodges</button>
     </div>
   </div>
@@ -648,7 +658,7 @@
 
       <div class="button-arena" id="arena">
         <button class="btn btn-accept" id="acceptBtn">Keep Promise (Hop on Roblox)</button>
-        <button class="btn btn-busy" id="busyBtn">Still Busy / Fake Promise</button>
+        <button class="btn btn-busy" id="busyBtn">Still Busy</button>
       </div>
     </div>
 
@@ -724,8 +734,10 @@
     const robloxCrashModal = document.getElementById('robloxCrashModal');
     const closeCrashBtn = document.getElementById('closeCrashBtn');
     const captchaModal = document.getElementById('captchaModal');
-    const captchaCheck = document.getElementById('captchaCheck');
+    const captchaInput = document.getElementById('captchaInput');
     const captchaSubmitBtn = document.getElementById('captchaSubmitBtn');
+
+    const requiredCaptchaText = "i admit i am scared of losing in roblox and my excuses are 100% cap";
 
     let dodgeCount = 0;
     const maxDodges = 20;
@@ -866,6 +878,7 @@
       }
       if (count === 18) {
         captchaModal.style.display = 'flex';
+        setTimeout(() => captchaInput.focus(), 100);
       }
     }
 
@@ -940,8 +953,15 @@
       robloxCrashModal.style.display = 'none';
     });
 
-    captchaCheck.addEventListener('change', () => {
-      captchaSubmitBtn.disabled = !captchaCheck.checked;
+    captchaInput.addEventListener('input', () => {
+      // Clean up brackets, trailing period, or extra spaces so she can pass once she types the sentence
+      const cleaned = captchaInput.value
+        .trim()
+        .replace(/^\[|\]$/g, '')
+        .replace(/\.$/, '')
+        .trim()
+        .toLowerCase();
+      captchaSubmitBtn.disabled = (cleaned !== requiredCaptchaText);
     });
 
     captchaSubmitBtn.addEventListener('click', () => {
@@ -965,8 +985,8 @@
       interactiveSection.style.display = 'none';
       resultPanel.style.display = 'block';
       resultTitle.textContent = "ALRIGHT, YOU WIN!";
-      resultDesc.textContent = `You chased a button across the entire screen 20 times, racked up a ${robuxTax.toLocaleString()} Robux Fine, and passed the Anti-Cap CAPTCHA just to stay offline. Catch you on Roblox next time!`;
-      receiptMessage = `👑 [SHERIFF PARDON]: I survived all 20 full-screen dodges, racked up a ${robuxTax.toLocaleString()} Robux Fine, and passed the Anti-Cap CAPTCHA for my AFK Pass!`;
+      resultDesc.textContent = `You chased a button across the entire screen 20 times, racked up a ${robuxTax.toLocaleString()} Robux Fine, and typed out the Anti-Cap CAPTCHA just to stay offline. Catch you on Roblox next time!`;
+      receiptMessage = `👑 [SHERIFF PARDON]: I survived all 20 full-screen dodges, racked up a ${robuxTax.toLocaleString()} Robux Fine, and typed out the Anti-Cap CAPTCHA for my AFK Pass!`;
     });
 
     acceptBtn.addEventListener('click', () => {
