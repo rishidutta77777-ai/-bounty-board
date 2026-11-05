@@ -639,7 +639,7 @@
     <div class="suspect-profile">
       <div><strong>Promise Rating:</strong> 0 / 10</div>
       <div><strong>Main Skill:</strong> Ghosting Lobbies</div>
-      <div><strong>Excuses Used:</strong> Infinite</div>
+      <div><strong>Cap Level:</strong> Certified Yapper 🧢</div>
       <div><strong>Danger Level:</strong> Harmless Noob</div>
     </div>
 
@@ -961,15 +961,14 @@
     function checkCaptchaInput() {
       const val = captchaInput.value
         .toLowerCase()
-        .replace(/[\[\]\.\,\!]/g, '') // Strip brackets or punctuation
-        .replace(/\s+/g, ' ')         // Collapse multiple spaces
+        .replace(/[\[\]\.\,\!]/g, '')
+        .replace(/\s+/g, ' ')
         .trim();
 
       const exactTarget = "i admit i am scared of losing in roblox and my excuses are 100% cap";
       const typoTarget  = "i admit i am scared if losing in roblox and my excuses are 100% cap";
       const noPctTarget = "i admit i am scared of losing in roblox and my excuses are 100 cap";
 
-      // Unlock if it matches (case-insensitive) or has the key words ending in "100% cap"
       const isMatch = (
         val === exactTarget ||
         val === typoTarget ||
