@@ -474,7 +474,7 @@
       background: #191a1c;
       color: #fff;
       font-size: 0.86rem;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
       outline: none;
       user-select: text;
       -webkit-user-select: text;
@@ -482,6 +482,13 @@
 
     .captcha-input:focus {
       border-color: #ffdf6b;
+    }
+
+    .captcha-hint {
+      font-size: 0.76rem;
+      color: #ff6b6b;
+      min-height: 18px;
+      margin-bottom: 8px;
     }
 
     .roblox-btn {
@@ -494,6 +501,12 @@
       font-size: 0.9rem;
       cursor: pointer;
       width: 100%;
+      transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+    }
+
+    .roblox-btn.unlocked {
+      background: #2d5a27;
+      color: #fff;
     }
 
     .roblox-btn:disabled {
@@ -564,7 +577,8 @@
       <div class="captcha-target-box">
         [ I admit I am scared of losing in Roblox and my excuses are 100% cap ]
       </div>
-      <input type="text" id="captchaInput" class="captcha-input" placeholder="Type the text inside [ ] here..." autocomplete="off">
+      <input type="text" id="captchaInput" class="captcha-input" placeholder="Type the text inside [ ] here..." autocomplete="off" autocapitalize="off" spellcheck="false">
+      <div class="captcha-hint" id="captchaHint"></div>
       <button class="roblox-btn" id="captchaSubmitBtn" disabled>Verify & Unlock Final 2 Dodges</button>
     </div>
   </div>
@@ -735,9 +749,8 @@
     const closeCrashBtn = document.getElementById('closeCrashBtn');
     const captchaModal = document.getElementById('captchaModal');
     const captchaInput = document.getElementById('captchaInput');
+    const captchaHint = document.getElementById('captchaHint');
     const captchaSubmitBtn = document.getElementById('captchaSubmitBtn');
-
-    const requiredCaptchaText = "i admit i am scared of losing in roblox and my excuses are 100% cap";
 
     let dodgeCount = 0;
     const maxDodges = 20;
@@ -817,13 +830,11 @@
 
     // --- 5. Update Mugshot, Skill Bar, & Robux Fine ---
     function updateChaosState(count) {
-      // Add +500 Robux Fine per dodge
       robuxTax = count * 500;
       robuxTaxAmount.textContent = robuxTax.toLocaleString();
       robuxFineBanner.classList.add('siren');
       setTimeout(() => robuxFineBanner.classList.remove('siren'), 220);
 
-      // Update Pro Status Meter
       const pct = Math.max(0, 100 - (count * 5));
       meterFill.style.width = `${pct}%`;
 
@@ -840,7 +851,6 @@
         meterLabel.textContent = `0% Certified iPad Kid`;
       }
 
-      // Dynamic Avatar Expressions
       if (count >= 5 && count < 12) {
         faceSmile.style.display = 'none';
         faceShades.style.display = 'block';
@@ -856,7 +866,6 @@
         statusStamp.textContent = "STATUS: DODGE QUEEN";
       }
 
-      // Special Chaos Events by Dodge Number
       if (count === 8) {
         batteryToast.classList.add('show');
         setTimeout(() => batteryToast.classList.remove('show'), 4000);
@@ -890,11 +899,9 @@
         e.preventDefault();
       }
 
-      // Spawn floating emoji where the button just ran from
       const rect = busyBtn.getBoundingClientRect();
       spawnEmojiParticle(rect.left + rect.width / 2, rect.top);
 
-      // Break out of the card to sprint across the entire screen smoothly
       if (busyBtn.style.position !== 'fixed') {
         busyBtn.style.left = `${rect.left}px`;
         busyBtn.style.top = `${rect.top}px`;
@@ -909,7 +916,6 @@
 
       updateChaosState(dodgeCount);
 
-      // Pick a distant coordinate across the whole viewport so she sees it run away
       const btnWidth = busyBtn.offsetWidth || 160;
       const btnHeight = busyBtn.offsetHeight || 44;
       const pad = 16;
@@ -920,7 +926,6 @@
       let targetX = Math.floor(Math.random() * maxX);
       let targetY = Math.floor(Math.random() * maxY);
 
-      // Force long-distance sprint across the screen
       if (Math.hypot(targetX - rect.left, targetY - rect.top) < 150) {
         targetX = maxX - targetX + pad;
         targetY = maxY - targetY + 40;
@@ -941,7 +946,6 @@
           clearDecoys();
           busyBtn.textContent = "👑 Claim Official AFK Pass";
           busyBtn.classList.add('surrendered');
-          // Glide to center-bottom so she can easily tap it
           busyBtn.style.left = `${Math.max(pad, (window.innerWidth - 220) / 2)}px`;
           busyBtn.style.top = `${window.innerHeight - 85}px`;
         }
@@ -953,19 +957,47 @@
       robloxCrashModal.style.display = 'none';
     });
 
-    captchaInput.addEventListener('input', () => {
-      // Clean up brackets, trailing period, or extra spaces so she can pass once she types the sentence
-      const cleaned = captchaInput.value
-        .trim()
-        .replace(/^\[|\]$/g, '')
-        .replace(/\.$/, '')
-        .trim()
-        .toLowerCase();
-      captchaSubmitBtn.disabled = (cleaned !== requiredCaptchaText);
-    });
+    // Non-case-sensitive + mobile-keyboard friendly CAPTCHA checker
+    function checkCaptchaInput() {
+      const val = captchaInput.value
+        .toLowerCase()
+        .replace(/[\[\]\.\,\!]/g, '') // Strip brackets or punctuation
+        .replace(/\s+/g, ' ')         // Collapse multiple spaces
+        .trim();
+
+      const exactTarget = "i admit i am scared of losing in roblox and my excuses are 100% cap";
+      const typoTarget  = "i admit i am scared if losing in roblox and my excuses are 100% cap";
+      const noPctTarget = "i admit i am scared of losing in roblox and my excuses are 100 cap";
+
+      // Unlock if it matches (case-insensitive) or has the key words ending in "100% cap"
+      const isMatch = (
+        val === exactTarget ||
+        val === typoTarget ||
+        val === noPctTarget ||
+        (val.includes("admit") && val.includes("scared") && val.includes("roblox") && val.includes("100") && val.includes("cap"))
+      );
+
+      if (isMatch) {
+        captchaSubmitBtn.disabled = false;
+        captchaSubmitBtn.classList.add('unlocked');
+        captchaHint.style.color = "#6bff84";
+        captchaHint.textContent = "✓ Verified! Tap the button below to continue.";
+      } else {
+        captchaSubmitBtn.disabled = true;
+        captchaSubmitBtn.classList.remove('unlocked');
+        captchaHint.textContent = "";
+      }
+    }
+
+    captchaInput.addEventListener('input', checkCaptchaInput);
+    captchaInput.addEventListener('keyup', checkCaptchaInput);
+    captchaInput.addEventListener('change', checkCaptchaInput);
 
     captchaSubmitBtn.addEventListener('click', () => {
-      captchaModal.style.display = 'none';
+      if (!captchaSubmitBtn.disabled) {
+        playSound('win');
+        captchaModal.style.display = 'none';
+      }
     });
 
     busyBtn.addEventListener('mouseover', dodgeButton);
