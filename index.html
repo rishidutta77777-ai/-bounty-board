@@ -48,10 +48,24 @@
       animation: earthquake 0.45s ease-in-out;
     }
 
-    /* Top System Toasts (Low Battery & Telemetry) */
+    /* Fake Camera Shutter Flash (Dodge 4) */
+    .camera-flash {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #ffffff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10005;
+      transition: opacity 0.08s ease-out;
+    }
+    .camera-flash.snap {
+      opacity: 0.95;
+    }
+
+    /* Top System Toasts */
     .system-toast {
       position: fixed;
-      top: -110px;
+      top: -120px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(20, 20, 20, 0.97);
@@ -79,17 +93,19 @@
       font-size: 1.45rem;
     }
 
-    /* Fake Screen Hair & Mosquito Smudge (Dodge 7) */
-    .screen-smudge {
+    /* ULTRA-REALISTIC FALLEN GIRL HAIR ON SCREEN (Dodge 7) */
+    .realistic-hair-overlay {
       display: none;
       position: fixed;
-      top: 38%;
-      left: 52%;
-      width: 110px;
-      height: 95px;
-      z-index: 9800;
+      top: 22%;
+      left: 14%;
+      width: 270px;
+      height: 230px;
+      z-index: 9850;
       cursor: pointer;
       touch-action: none;
+      /* Slight natural micro-jiggle when page shakes */
+      transform: rotate(-4deg);
     }
 
     /* Floating Brainrot Emoji Particles */
@@ -549,6 +565,26 @@
       background: #2a9d8f;
     }
 
+    /* Ego Choice Buttons (Dodge 13) */
+    .ego-choice-btn {
+      background: #191a1c;
+      color: #ffdf6b;
+      border: 1px solid #555;
+      border-radius: 8px;
+      padding: 11px 12px;
+      width: 100%;
+      font-size: 0.84rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .ego-choice-btn:hover, .ego-choice-btn:active {
+      background: #2d5a27;
+      color: #fff;
+    }
+
     /* Bracketed CAPTCHA Prompt & Text Input (Dodge 18) */
     .captcha-target-box {
       background: #141516;
@@ -684,7 +720,10 @@
 </head>
 <body>
 
-  <!-- Top System Toast (Used for Dodge 3 Reels Detector, Dodge 7 Hair Roast, Dodge 8 Battery, Dodge 9 Clown Alert) -->
+  <!-- Camera Shutter Flash (Dodge 4) -->
+  <div class="camera-flash" id="cameraFlash"></div>
+
+  <!-- Top System Toast -->
   <div class="system-toast" id="systemToast">
     <span class="toast-icon" id="toastIcon">🪫</span>
     <div id="toastBody">
@@ -693,15 +732,33 @@
     </div>
   </div>
 
-  <!-- Fake Hair Strand & Mosquito On Screen (Dodge 7) -->
-  <div class="screen-smudge" id="screenSmudge" title="Wipe screen">
-    <svg viewBox="0 0 110 95" width="110" height="95">
-      <!-- Realistic Curved Eyelash / Hair Strand -->
-      <path d="M 10 80 Q 48 15 95 42" stroke="#16110c" stroke-width="1.4" fill="none" opacity="0.88" stroke-linecap="round"/>
-      <!-- Tiny Mosquito -->
-      <circle cx="52" cy="36" r="2.2" fill="#1a1a1a"/>
-      <ellipse cx="49" cy="33" rx="3.5" ry="1.3" fill="rgba(200,200,200,0.65)" transform="rotate(-30 49 33)"/>
-      <ellipse cx="55" cy="33" rx="3.5" ry="1.3" fill="rgba(200,200,200,0.65)" transform="rotate(30 55 33)"/>
+  <!-- ULTRA-REALISTIC FALLEN GIRL HAIR ON SCREEN (Dodge 7) -->
+  <div class="realistic-hair-overlay" id="screenHair">
+    <svg viewBox="0 0 270 230" width="270" height="230" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Soft LCD depth shadow under the hair strand -->
+        <filter id="hairDropShadow" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="0.95" />
+        </filter>
+      </defs>
+      <!-- Invisible wide hit-area along the curve so any swipe/tap catches it -->
+      <path d="M 18 28 C 75 58, 45 148, 138 168 C 195 180, 232 142, 256 196"
+            stroke="transparent" stroke-width="38" fill="none" />
+
+      <!-- 1. LCD Screen Glass Shadow (offset by 1.3px to look like it's resting on top of the glass) -->
+      <path d="M 19.3 29.5 C 76.3 59.5, 46.3 149.5, 139.3 169.5 C 196.3 181.5, 233.3 143.5, 257.3 197.5"
+            stroke="rgba(0, 0, 0, 0.34)" stroke-width="1.15" fill="none" filter="url(#hairDropShadow)" stroke-linecap="round" />
+
+      <!-- 2. Main Natural Dark Hair Strand (tapered look, realistic 0.75px width) -->
+      <path d="M 18 28 C 75 58, 45 148, 138 168 C 195 180, 232 142, 256 196"
+            stroke="#0e0a07" stroke-width="0.78" fill="none" opacity="0.94" stroke-linecap="round" />
+
+      <!-- 3. Microscopic Keratin Light Reflection Highlight along the mid-bend -->
+      <path d="M 54 96 C 58 134, 96 159, 138 168"
+            stroke="rgba(255, 248, 235, 0.28)" stroke-width="0.32" fill="none" stroke-linecap="round" />
+
+      <!-- 4. Tiny Hair Follicle Root Bulb at the top tip -->
+      <ellipse cx="17.6" cy="27.7" rx="1.15" ry="0.7" transform="rotate(28 17.6 27.7)" fill="#1c140e" opacity="0.9" />
     </svg>
   </div>
 
@@ -733,7 +790,18 @@
     </div>
   </div>
 
-  <!-- 3. Fake Roblox Disconnected Popup (Dodge 15) -->
+  <!-- 3. Reverse-Psychology Ego Trap Popup (Dodge 13) -->
+  <div class="modal-overlay" id="egoTrapModal">
+    <div class="roblox-modal">
+      <h4>📝 Official Skill-Issue Survey</h4>
+      <p>Since you are STILL chasing the red button, Roblox requires you to select your official reason for dodging the lobby:</p>
+      <button class="ego-choice-btn" id="egoChoice1">👶 "I am scared of getting cooked by 8-year-old iPad kids"</button>
+      <button class="ego-choice-btn" id="egoChoice2">👵 "My obby parkour reflexes expired in 2022"</button>
+      <button class="ego-choice-btn" id="egoChoice3">🛌 "My bed and blanket are holding me hostage"</button>
+    </div>
+  </div>
+
+  <!-- 4. Fake Roblox Disconnected Popup (Dodge 15) -->
   <div class="modal-overlay" id="robloxCrashModal">
     <div class="roblox-modal">
       <h4>Disconnected</h4>
@@ -742,7 +810,7 @@
     </div>
   </div>
 
-  <!-- 4. Anti-Cap CAPTCHA Popup (Dodge 18) -->
+  <!-- 5. Anti-Cap CAPTCHA Popup (Dodge 18) -->
   <div class="modal-overlay" id="captchaModal">
     <div class="roblox-modal">
       <h4>🤖 Anti-Cap Security Check</h4>
@@ -756,7 +824,7 @@
     </div>
   </div>
 
-  <!-- 5. Biometric Thumb Lie-Detector Scanner (Dodge 19) -->
+  <!-- 6. Biometric Thumb Lie-Detector Scanner (Dodge 19) -->
   <div class="modal-overlay" id="thumbScanModal">
     <div class="roblox-modal">
       <h4>🕵️‍♀️ Biometric Schedule Scanner</h4>
@@ -872,7 +940,7 @@
   </div>
 
   <script>
-    // --- 1. Retro Roblox "OOF", Clown Horn, Vine Boom & Ringtone Synth ---
+    // --- 1. Retro Roblox "OOF", Clown Horn, Vine Boom, Shutter & Alarm Synth ---
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
 
@@ -901,7 +969,6 @@
           osc.start(now);
           osc.stop(now + 0.11);
         } else if (type === 'clown') {
-          // Honk-Honk Clown Horn!
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
           osc.connect(gain);
@@ -915,7 +982,6 @@
           osc.start(now);
           osc.stop(now + 0.38);
         } else if (type === 'boom') {
-          // Bass-Boosted Vine Boom
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
           osc.connect(gain);
@@ -927,6 +993,18 @@
           gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
           osc.start(now);
           osc.stop(now + 0.45);
+        } else if (type === 'shutter') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(1200, now);
+          osc.frequency.exponentialRampToValueAtTime(300, now + 0.06);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.06);
+          osc.start(now);
+          osc.stop(now + 0.06);
         } else if (type === 'alarm') {
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
@@ -975,7 +1053,8 @@
     const systemToast = document.getElementById('systemToast');
     const toastIcon = document.getElementById('toastIcon');
     const toastBody = document.getElementById('toastBody');
-    const screenSmudge = document.getElementById('screenSmudge');
+    const screenHair = document.getElementById('screenHair');
+    const cameraFlash = document.getElementById('cameraFlash');
 
     const meterFill = document.getElementById('meterFill');
     const meterLabel = document.getElementById('meterLabel');
@@ -994,6 +1073,11 @@
     const ceoCallModal = document.getElementById('ceoCallModal');
     const declineCeoBtn = document.getElementById('declineCeoBtn');
     const answerCeoBtn = document.getElementById('answerCeoBtn');
+
+    const egoTrapModal = document.getElementById('egoTrapModal');
+    const egoChoice1 = document.getElementById('egoChoice1');
+    const egoChoice2 = document.getElementById('egoChoice2');
+    const egoChoice3 = document.getElementById('egoChoice3');
 
     const robloxCrashModal = document.getElementById('robloxCrashModal');
     const closeCrashBtn = document.getElementById('closeCrashBtn');
@@ -1019,30 +1103,31 @@
 
     const brainrotEmojis = ['💀', '🧢', '🤡', '🌾', '🏃‍♀️', '💨', '🎻'];
 
+    // Notice Dodge 7 does NOT mention the hair so it doesn't spoil the illusion!
     const roasts = [
       "1/20: OOF! Look at it run! Missed—just like you missed our lobby.",
       "2/20: Catch it if you can! Remember when you said 'I'll come play'?",
       "3/20: 📡 SATELLITE ALERT: We just scanned your phone's background activity!",
-      "4/20: 🤡 HONK HONK! 'I'll hop on soon' — Top 10 Anime Betrayals.",
+      "4/20: 📸 SNAP! Caught you smirking at your screen in 4K Ultra HD!",
       "5/20: Sunglasses unlocked! Running all over the screen now!",
       "6/20: 🛰️ Hold up! Launching NASA Satellites to verify your excuse...",
-      "7/20: Wait... is there a hair and a mosquito on your phone screen?!",
+      "7/20: Your thumb is doing a full gym workout chasing this button!",
       "8/20: ⚠️ LOW BATTERY! Even your phone is running out of excuses.",
-      "9/20: 💄 Subscribed! You are now enrolled in 'Lobby-Dodgers Anonymous'.",
+      "9/20: 🩴 MOM RADAR ALERT: Flying Chappal locked onto your location!",
       "10/20: SHADOW CLONE JUTSU! Which red button is the real one?! 🤡",
       "11/20: 📞 RING RING! Uh oh, the CEO of Roblox is calling you personally!",
       "12/20: EARTHQUAKE! Your excuse was so heavy it flipped the whole poster upside-down!",
-      "13/20: Playing upside-down now?! Just tap the green button!",
+      "13/20: 📝 Hold up! Fill out the Official Skill-Issue Survey to continue!",
       "14/20: Gravity restored! Still chasing the red button across the page?!",
       "15/20: ERROR 277! Even the Roblox servers crashed from all this cap.",
       "16/20: 🦎 CAMOUFLAGE MODE! Wait... which button is Green and which is Red?!",
-      "17/20: Wait, are you using an auto-clicker or just pure stubbornness?",
+      "17/20: 🚑 Calling an ambulance for your thumb cramps right now...",
       "18/20: HOLD UP! Bot behavior detected. Complete the Anti-Cap CAPTCHA!",
       "19/20: 🕵️‍♀️ FINAL SECURITY CHECK! Scan your thumb to prove you're actually busy!",
       "20/20: CROWN UNLOCKED! 20/20 survived. The red button officially surrenders!"
     ];
 
-    function showSystemToast(icon, htmlText, duration = 4200) {
+    function showSystemToast(icon, htmlText, duration = 4300) {
       if (toastTimer) clearTimeout(toastTimer);
       toastIcon.textContent = icon;
       toastBody.innerHTML = htmlText;
@@ -1063,20 +1148,21 @@
       setTimeout(() => el.remove(), 1000);
     }
 
-    // --- 4. Fake Screen Hair / Mosquito Smudge Trap (Dodge 7) ---
-    function triggerSmudgeRoast(e) {
+    // --- 4. ULTRA-REALISTIC FALLEN GIRL HAIR TRAP (Dodge 7) ---
+    function triggerHairWipeRoast(e) {
       e.preventDefault();
       e.stopPropagation();
       playSound('clown');
-      screenSmudge.style.display = 'none';
+      screenHair.style.display = 'none';
       showSystemToast(
         '😂',
-        '<strong>CAUGHT IN 4K ULTRA HD!</strong><br>Did you really just try to wipe that fake hair off your screen?! Focus on the lobby!',
-        5000
+        '<strong>AHAHAHA CAUGHT YOU WIPING YOUR SCREEN!! 💀</strong><br>That hair was 100% FAKE—just like your promise to hop on Roblox!',
+        5500
       );
     }
-    screenSmudge.addEventListener('touchstart', triggerSmudgeRoast, { passive: false });
-    screenSmudge.addEventListener('click', triggerSmudgeRoast);
+    screenHair.addEventListener('touchstart', triggerHairWipeRoast, { passive: false });
+    screenHair.addEventListener('touchmove', triggerHairWipeRoast, { passive: false });
+    screenHair.addEventListener('click', triggerHairWipeRoast);
 
     // --- 5. NASA 99% Excuse Loading Trap (Dodge 6) ---
     function startNasaExcuseTrap() {
@@ -1167,7 +1253,21 @@
       acceptBtn.click();
     });
 
-    // --- 8. Biometric Thumb Scanner (Dodge 19) ---
+    // --- 8. Ego Trap Survey Controls (Dodge 13) ---
+    function handleEgoChoice(confessionText) {
+      playSound('clown');
+      egoTrapModal.style.display = 'none';
+      showSystemToast(
+        '📋',
+        `<strong>OFFICIAL CONFESSION RECORDED:</strong><br>Koyel admitted: "${confessionText}" 💀`,
+        4500
+      );
+    }
+    egoChoice1.addEventListener('click', () => handleEgoChoice("Scared of 8-year-old iPad kids"));
+    egoChoice2.addEventListener('click', () => handleEgoChoice("Parkour reflexes expired in 2022"));
+    egoChoice3.addEventListener('click', () => handleEgoChoice("Held hostage by bed & blanket"));
+
+    // --- 9. Biometric Thumb Scanner (Dodge 19) ---
     let scanInterval = null;
     let scanProgress = 0;
     let scanCompleted = false;
@@ -1222,7 +1322,7 @@
       thumbScanModal.style.display = 'none';
     });
 
-    // --- 9. Update Mugshot, Skill Bar, & Chaos Milestones ---
+    // --- 10. Update Mugshot, Skill Bar, & Chaos Milestones ---
     function updateChaosState(count) {
       robuxTax += 500;
       robuxTaxAmount.textContent = robuxTax.toLocaleString();
@@ -1276,11 +1376,23 @@
           4200
         );
       }
+      if (count === 4) {
+        // Fake Front Camera Flash!
+        playSound('shutter');
+        cameraFlash.classList.add('snap');
+        setTimeout(() => cameraFlash.classList.remove('snap'), 140);
+        showSystemToast(
+          '📸',
+          '<strong>FRONT CAMERA PHOTO SAVED!</strong><br>Caught Koyel smiling at her phone in 4K while dodging the lobby! Sending to Sheriff...',
+          4500
+        );
+      }
       if (count === 6) {
         startNasaExcuseTrap();
       }
       if (count === 7) {
-        screenSmudge.style.display = 'block';
+        // Silently drop the ultra-realistic hair strand onto her screen!
+        screenHair.style.display = 'block';
       }
       if (count === 8) {
         showSystemToast(
@@ -1291,9 +1403,9 @@
       }
       if (count === 9) {
         showSystemToast(
-          '🤡',
-          '<strong>SUBSCRIPTION CONFIRMED!</strong><br>Koyel is now subscribed to "How To Stop Ghosting Your Friends 101".',
-          4200
+          '🩴',
+          '<strong>MOM RADAR ALERT:</strong><br>"She said she was busy, why is she aggressively tapping a red button?!" Flying Chappal inbound!',
+          4500
         );
       }
       if (count === 10) {
@@ -1309,6 +1421,9 @@
         posterCard.classList.add('flipped');
         setTimeout(() => document.body.classList.remove('shake-screen'), 500);
       }
+      if (count === 13) {
+        egoTrapModal.style.display = 'flex';
+      }
       if (count === 14) {
         posterCard.classList.remove('flipped');
       }
@@ -1322,6 +1437,13 @@
         busyBtn.textContent = "Hop On Roblox (Wait Don't Tap)";
         acceptBtn.textContent = "Still Busy (100% Real Tap Me)";
       }
+      if (count === 17) {
+        showSystemToast(
+          '🚑',
+          '<strong>MEDICAL DISPATCH:</strong><br>Sending 1x Ice Pack & Volini Spray for Koyel\'s thumb after sprinting 17 times across the screen.',
+          4300
+        );
+      }
       if (count === 18) {
         captchaModal.style.display = 'flex';
         setTimeout(() => captchaInput.focus(), 100);
@@ -1331,7 +1453,7 @@
       }
     }
 
-    // --- 10. Full-Viewport Sprinting Button Logic ---
+    // --- 11. Full-Viewport Sprinting Button Logic ---
     function dodgeButton(e) {
       if (dodgeCount >= maxDodges) return;
 
@@ -1352,12 +1474,12 @@
 
       dodgeCount++;
 
-      // Every 4th dodge plays Clown Horn or Vine Boom
+      // Audio variation
       if (dodgeCount % 8 === 0) {
         playSound('boom');
-      } else if (dodgeCount % 4 === 0) {
+      } else if (dodgeCount % 4 === 0 && dodgeCount !== 4) {
         playSound('clown');
-      } else {
+      } else if (dodgeCount !== 4) {
         playSound('oof');
       }
 
@@ -1382,7 +1504,6 @@
       const finalX = Math.min(maxX, Math.max(pad, targetX));
       const finalY = Math.min(maxY, Math.max(60, targetY));
 
-      // Track total distance her thumb chased the button
       totalPixelsChased += Math.round(Math.hypot(finalX - rect.left, finalY - rect.top));
 
       requestAnimationFrame(() => {
@@ -1398,7 +1519,7 @@
 
         if (dodgeCount === maxDodges) {
           clearDecoys();
-          screenSmudge.style.display = 'none';
+          screenHair.style.display = 'none';
           busyBtn.textContent = "👑 Claim Official AFK Pass";
           busyBtn.classList.add('surrendered');
           busyBtn.style.left = `${Math.max(pad, (window.innerWidth - 220) / 2)}px`;
@@ -1469,7 +1590,7 @@
       }
       playSound('win');
       clearDecoys();
-      screenSmudge.style.display = 'none';
+      screenHair.style.display = 'none';
       posterCard.classList.remove('flipped');
       busyBtn.style.display = 'none';
       statusStamp.textContent = "PARDONED (FOR NOW)";
@@ -1478,7 +1599,7 @@
 
       const meters = getMarathonMeters();
       resultTitle.textContent = "ALRIGHT, YOU WIN!";
-      resultDesc.textContent = `You survived NASA's Brain-Cell Scan, hung up on the CEO of Roblox, and chased a button across the screen 20 times just to stay offline!`;
+      resultDesc.textContent = `You survived NASA's Brain-Cell Scan, hung up on the CEO of Roblox, tried to wipe a fake hair off your screen, and chased a button 20 times just to stay offline!`;
       statsReceiptBox.innerHTML = `
         <strong>📊 OFFICIAL SHERIFF TELEMETRY RECEIPT:</strong><br>
         • <strong>Thumb Marathon Sprinted:</strong> ${meters} meters (${totalPixelsChased.toLocaleString()} px)<br>
@@ -1492,7 +1613,7 @@
     acceptBtn.addEventListener('click', () => {
       playSound('win');
       clearDecoys();
-      screenSmudge.style.display = 'none';
+      screenHair.style.display = 'none';
       posterCard.classList.remove('flipped');
       busyBtn.style.display = 'none';
       statusStamp.textContent = "PROMISE KEPT!";
