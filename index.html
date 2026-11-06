@@ -48,35 +48,48 @@
       animation: earthquake 0.45s ease-in-out;
     }
 
-    /* Fake Low Battery Toast (Dodge 8) */
-    .battery-toast {
+    /* Top System Toasts (Low Battery & Telemetry) */
+    .system-toast {
       position: fixed;
-      top: -90px;
+      top: -110px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(25, 25, 25, 0.96);
+      background: rgba(20, 20, 20, 0.97);
       color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       padding: 12px 16px;
       border-radius: 14px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.75);
       border: 1px solid #ff3b30;
       z-index: 10000;
       width: 92%;
-      max-width: 370px;
+      max-width: 375px;
       display: flex;
       align-items: center;
       gap: 10px;
       transition: top 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
 
-    .battery-toast.show {
+    .system-toast.show {
       top: 14px;
     }
 
-    .battery-icon {
-      font-size: 1.3rem;
+    .toast-icon {
+      font-size: 1.45rem;
+    }
+
+    /* Fake Screen Hair & Mosquito Smudge (Dodge 7) */
+    .screen-smudge {
+      display: none;
+      position: fixed;
+      top: 38%;
+      left: 52%;
+      width: 110px;
+      height: 95px;
+      z-index: 9800;
+      cursor: pointer;
+      touch-action: none;
     }
 
     /* Floating Brainrot Emoji Particles */
@@ -389,8 +402,16 @@
       transition: left 0.28s cubic-bezier(0.25, 1, 0.5, 1), top 0.28s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s ease, background-color 0.2s;
     }
 
+    /* Camouflage Color Swap (Dodge 16) */
+    .btn-busy.camo-green {
+      background-color: var(--green) !important;
+    }
+    .btn-accept.camo-red {
+      background-color: var(--crimson) !important;
+    }
+
     .btn-busy.surrendered {
-      background-color: #5c4b3b;
+      background-color: #5c4b3b !important;
       border-style: dashed;
       transform: scale(1) rotate(0deg) !important;
       box-shadow: 0 0 15px rgba(255, 223, 107, 0.9);
@@ -413,16 +434,16 @@
       transition: transform 0.2s ease;
     }
 
-    /* Fake Roblox Error & Anti-Cap CAPTCHA Modals */
+    /* Modals */
     .modal-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.84);
       z-index: 9999;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 18px;
     }
 
     .roblox-modal {
@@ -430,29 +451,105 @@
       color: #fff;
       font-family: Arial, Helvetica, sans-serif;
       width: 100%;
-      max-width: 340px;
-      border-radius: 8px;
+      max-width: 345px;
+      border-radius: 10px;
       padding: 20px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.95);
       border: 1px solid #393b3d;
     }
 
     .roblox-modal h4 {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       margin-bottom: 12px;
       padding-bottom: 8px;
       border-bottom: 1px solid #393b3d;
     }
 
     .roblox-modal p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: #bdbebe;
       line-height: 1.45;
       margin-bottom: 12px;
     }
 
-    /* Bracketed CAPTCHA Prompt & Text Input */
+    /* Fake 99% Loading Bar (Dodge 6) */
+    .excuse-progress-track {
+      width: 100%;
+      height: 18px;
+      background: #141516;
+      border-radius: 9px;
+      border: 1px solid #555;
+      overflow: hidden;
+      margin: 12px 0 8px;
+    }
+
+    .excuse-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #2d5a27, #52b788);
+      transition: width 0.25s ease, background 0.2s ease;
+    }
+
+    /* Fake Incoming CEO Call (Dodge 11) */
+    .ceo-call-card {
+      background: linear-gradient(180deg, #1b2028 0%, #0f1217 100%);
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 100%;
+      max-width: 335px;
+      border-radius: 22px;
+      padding: 26px 20px;
+      text-align: center;
+      border: 2px solid #3d4654;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.95);
+    }
+
+    .ceo-avatar {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: #e2231a;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
+      box-shadow: 0 0 20px rgba(226, 35, 26, 0.65);
+      animation: pulseCall 1s infinite alternate;
+    }
+
+    @keyframes pulseCall {
+      0% { transform: scale(0.95); }
+      100% { transform: scale(1.06); }
+    }
+
+    .call-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .call-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .call-decline {
+      background: #e63946;
+    }
+
+    .call-answer {
+      background: #2a9d8f;
+    }
+
+    /* Bracketed CAPTCHA Prompt & Text Input (Dodge 18) */
     .captcha-target-box {
       background: #141516;
       border: 1px dashed #ffdf6b;
@@ -489,6 +586,32 @@
       color: #ff6b6b;
       min-height: 18px;
       margin-bottom: 8px;
+    }
+
+    /* Biometric Thumb Scanner (Dodge 19) */
+    .thumb-scanner-ring {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 3px dashed #52b788;
+      margin: 12px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      cursor: pointer;
+      position: relative;
+      background: #141516;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .thumb-scanner-ring.scanning {
+      transform: scale(1.08);
+      border-color: #ffdf6b;
+      box-shadow: 0 0 22px rgba(255, 223, 107, 0.55);
     }
 
     .roblox-btn {
@@ -530,9 +653,19 @@
     }
 
     .result-panel p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    .stats-receipt-box {
+      background: rgba(43, 29, 14, 0.1);
+      border: 1px dashed var(--ink);
+      padding: 8px;
+      font-size: 0.78rem;
       margin-bottom: 12px;
+      text-align: left;
+      line-height: 1.45;
     }
 
     .copy-badge {
@@ -551,16 +684,56 @@
 </head>
 <body>
 
-  <!-- Fake Low Battery System Warning (Dodge 8) -->
-  <div class="battery-toast" id="batteryToast">
-    <span class="battery-icon">🪫</span>
-    <div>
+  <!-- Top System Toast (Used for Dodge 3 Reels Detector, Dodge 7 Hair Roast, Dodge 8 Battery, Dodge 9 Clown Alert) -->
+  <div class="system-toast" id="systemToast">
+    <span class="toast-icon" id="toastIcon">🪫</span>
+    <div id="toastBody">
       <strong>Low Excuse Battery (2%)</strong><br>
       Connect to a Roblox lobby immediately.
     </div>
   </div>
 
-  <!-- Fake Roblox Disconnected Popup (Dodge 15) -->
+  <!-- Fake Hair Strand & Mosquito On Screen (Dodge 7) -->
+  <div class="screen-smudge" id="screenSmudge" title="Wipe screen">
+    <svg viewBox="0 0 110 95" width="110" height="95">
+      <!-- Realistic Curved Eyelash / Hair Strand -->
+      <path d="M 10 80 Q 48 15 95 42" stroke="#16110c" stroke-width="1.4" fill="none" opacity="0.88" stroke-linecap="round"/>
+      <!-- Tiny Mosquito -->
+      <circle cx="52" cy="36" r="2.2" fill="#1a1a1a"/>
+      <ellipse cx="49" cy="33" rx="3.5" ry="1.3" fill="rgba(200,200,200,0.65)" transform="rotate(-30 49 33)"/>
+      <ellipse cx="55" cy="33" rx="3.5" ry="1.3" fill="rgba(200,200,200,0.65)" transform="rotate(30 55 33)"/>
+    </svg>
+  </div>
+
+  <!-- 1. NASA Satellite Brain-Cell & Excuse Detector (Dodge 6) -->
+  <div class="modal-overlay" id="excuseLoadModal">
+    <div class="roblox-modal">
+      <h4>🛰️ NASA Cap-o-Meter v4.2</h4>
+      <p id="excuseLoadStatus">Contacting NASA Satellites to locate Koyel's last remaining brain cell...</p>
+      <div class="excuse-progress-track">
+        <div class="excuse-progress-fill" id="excuseProgressFill"></div>
+      </div>
+      <p id="excusePctText" style="font-weight:bold; color:#ffdf6b; margin-bottom:10px;">0%</p>
+      <button class="roblox-btn" id="closeExcuseModalBtn" style="display:none;">Accept Roast & Keep Running 😭</button>
+    </div>
+  </div>
+
+  <!-- 2. Fake Incoming Call from Roblox CEO (Dodge 11) -->
+  <div class="modal-overlay" id="ceoCallModal">
+    <div class="ceo-call-card">
+      <div class="ceo-avatar">📞</div>
+      <div style="font-size:0.75rem; color:#a0aab8; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Incoming FaceTime Audio...</div>
+      <h3 style="font-size:1.25rem; margin-bottom:6px;">David Baszucki</h3>
+      <div style="font-size:0.82rem; color:#ffdf6b; margin-bottom:12px;">👑 Founder & CEO of Roblox</div>
+      <p style="font-size:0.8rem; color:#cbd5e1; line-height:1.4;">"Hey Koyel, my servers say you promised to hop online and then ghosted the lobby. Explain yourself!"</p>
+      <div class="call-actions">
+        <button class="call-btn call-decline" id="declineCeoBtn">Decline (I'm Scared +5,000 Fine)</button>
+        <button class="call-btn call-answer" id="answerCeoBtn">Answer & Hop On Roblox</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Fake Roblox Disconnected Popup (Dodge 15) -->
   <div class="modal-overlay" id="robloxCrashModal">
     <div class="roblox-modal">
       <h4>Disconnected</h4>
@@ -569,7 +742,7 @@
     </div>
   </div>
 
-  <!-- Anti-Cap CAPTCHA Popup (Dodge 18) -->
+  <!-- 4. Anti-Cap CAPTCHA Popup (Dodge 18) -->
   <div class="modal-overlay" id="captchaModal">
     <div class="roblox-modal">
       <h4>🤖 Anti-Cap Security Check</h4>
@@ -580,6 +753,20 @@
       <input type="text" id="captchaInput" class="captcha-input" placeholder="Type the text inside [ ] here..." autocomplete="off" autocapitalize="off" spellcheck="false">
       <div class="captcha-hint" id="captchaHint"></div>
       <button class="roblox-btn" id="captchaSubmitBtn" disabled>Verify & Unlock Final 2 Dodges</button>
+    </div>
+  </div>
+
+  <!-- 5. Biometric Thumb Lie-Detector Scanner (Dodge 19) -->
+  <div class="modal-overlay" id="thumbScanModal">
+    <div class="roblox-modal">
+      <h4>🕵️‍♀️ Biometric Schedule Scanner</h4>
+      <p id="thumbScanText">Press & HOLD your thumb on the scanner for 3 seconds to verify if you are actually "Busy" right now:</p>
+      <div class="thumb-scanner-ring" id="thumbScannerBtn">👆</div>
+      <div class="excuse-progress-track">
+        <div class="excuse-progress-fill" id="thumbScanFill"></div>
+      </div>
+      <p id="thumbScanResult" style="font-size:0.8rem; color:#ffdf6b; min-height:20px; margin-top:6px;">Hold thumb down...</p>
+      <button class="roblox-btn" id="closeThumbScanBtn" style="display:none; margin-top:10px;">IHaveNoExcusesLeft.exe (Final Dodge)</button>
     </div>
   </div>
 
@@ -679,29 +866,33 @@
     <div class="result-panel" id="resultPanel">
       <h3 id="resultTitle"></h3>
       <p id="resultDesc"></p>
+      <div class="stats-receipt-box" id="statsReceiptBox"></div>
       <button class="copy-badge" id="copyBtn">Copy Receipt For Chat</button>
     </div>
   </div>
 
   <script>
-    // --- 1. Retro Roblox "OOF" Synth + Haptic Vibration ---
+    // --- 1. Retro Roblox "OOF", Clown Horn, Vine Boom & Ringtone Synth ---
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
 
     function playSound(type) {
       if (navigator.vibrate) {
-        navigator.vibrate(type === 'oof' ? 40 : [60, 40, 90]);
+        if (type === 'oof') navigator.vibrate(40);
+        else if (type === 'clown' || type === 'boom') navigator.vibrate([80, 40, 120]);
+        else if (type === 'alarm') navigator.vibrate([150, 60, 150, 60, 200]);
+        else navigator.vibrate([60, 40, 90]);
       }
       try {
         if (!audioCtx) audioCtx = new AudioCtx();
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
         const now = audioCtx.currentTime;
+
         if (type === 'oof') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
           osc.type = 'sawtooth';
           osc.frequency.setValueAtTime(240, now);
           osc.frequency.exponentialRampToValueAtTime(140, now + 0.11);
@@ -709,12 +900,56 @@
           gain.gain.linearRampToValueAtTime(0.01, now + 0.11);
           osc.start(now);
           osc.stop(now + 0.11);
+        } else if (type === 'clown') {
+          // Honk-Honk Clown Horn!
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(480, now);
+          osc.frequency.setValueAtTime(340, now + 0.12);
+          osc.frequency.setValueAtTime(480, now + 0.24);
+          gain.gain.setValueAtTime(0.22, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.38);
+          osc.start(now);
+          osc.stop(now + 0.38);
+        } else if (type === 'boom') {
+          // Bass-Boosted Vine Boom
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(130, now);
+          osc.frequency.exponentialRampToValueAtTime(32, now + 0.45);
+          gain.gain.setValueAtTime(0.35, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+          osc.start(now);
+          osc.stop(now + 0.45);
+        } else if (type === 'alarm') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(720, now);
+          osc.frequency.setValueAtTime(480, now + 0.15);
+          osc.frequency.setValueAtTime(720, now + 0.3);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.45);
+          osc.start(now);
+          osc.stop(now + 0.45);
         } else if (type === 'win') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
           osc.type = 'square';
           osc.frequency.setValueAtTime(440, now);
           osc.frequency.setValueAtTime(554, now + 0.1);
           osc.frequency.setValueAtTime(659, now + 0.2);
-          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.setValueAtTime(0.14, now);
           gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
           osc.start(now);
           osc.stop(now + 0.35);
@@ -731,12 +966,16 @@
     const resultPanel = document.getElementById('resultPanel');
     const resultTitle = document.getElementById('resultTitle');
     const resultDesc = document.getElementById('resultDesc');
+    const statsReceiptBox = document.getElementById('statsReceiptBox');
     const statusStamp = document.getElementById('statusStamp');
     const copyBtn = document.getElementById('copyBtn');
 
     const robuxFineBanner = document.getElementById('robuxFineBanner');
     const robuxTaxAmount = document.getElementById('robuxTaxAmount');
-    const batteryToast = document.getElementById('batteryToast');
+    const systemToast = document.getElementById('systemToast');
+    const toastIcon = document.getElementById('toastIcon');
+    const toastBody = document.getElementById('toastBody');
+    const screenSmudge = document.getElementById('screenSmudge');
 
     const meterFill = document.getElementById('meterFill');
     const meterLabel = document.getElementById('meterLabel');
@@ -745,43 +984,73 @@
     const faceCry = document.getElementById('faceCry');
     const faceCrown = document.getElementById('faceCrown');
 
+    // Modals
+    const excuseLoadModal = document.getElementById('excuseLoadModal');
+    const excuseLoadStatus = document.getElementById('excuseLoadStatus');
+    const excuseProgressFill = document.getElementById('excuseProgressFill');
+    const excusePctText = document.getElementById('excusePctText');
+    const closeExcuseModalBtn = document.getElementById('closeExcuseModalBtn');
+
+    const ceoCallModal = document.getElementById('ceoCallModal');
+    const declineCeoBtn = document.getElementById('declineCeoBtn');
+    const answerCeoBtn = document.getElementById('answerCeoBtn');
+
     const robloxCrashModal = document.getElementById('robloxCrashModal');
     const closeCrashBtn = document.getElementById('closeCrashBtn');
+
     const captchaModal = document.getElementById('captchaModal');
     const captchaInput = document.getElementById('captchaInput');
     const captchaHint = document.getElementById('captchaHint');
     const captchaSubmitBtn = document.getElementById('captchaSubmitBtn');
 
+    const thumbScanModal = document.getElementById('thumbScanModal');
+    const thumbScannerBtn = document.getElementById('thumbScannerBtn');
+    const thumbScanFill = document.getElementById('thumbScanFill');
+    const thumbScanResult = document.getElementById('thumbScanResult');
+    const closeThumbScanBtn = document.getElementById('closeThumbScanBtn');
+
     let dodgeCount = 0;
     const maxDodges = 20;
     let robuxTax = 0;
+    let totalPixelsChased = 0;
     let receiptMessage = "";
     let activeDecoys = [];
+    let toastTimer = null;
 
-    const brainrotEmojis = ['💀', '🧢', '🤡', '🌾', '🏃‍♀️', '💨'];
+    const brainrotEmojis = ['💀', '🧢', '🤡', '🌾', '🏃‍♀️', '💨', '🎻'];
 
     const roasts = [
       "1/20: OOF! Look at it run! Missed—just like you missed our lobby.",
       "2/20: Catch it if you can! Remember when you said 'I'll come play'?",
-      "3/20: That button equipped the Roblox Speed Coil to escape your thumb!",
-      "4/20: +2,000 Robux Fine! 'I'll hop on soon' — Top 10 Anime Betrayals.",
+      "3/20: 📡 SATELLITE ALERT: We just scanned your phone's background activity!",
+      "4/20: 🤡 HONK HONK! 'I'll hop on soon' — Top 10 Anime Betrayals.",
       "5/20: Sunglasses unlocked! Running all over the screen now!",
-      "6/20: A random Bacon Hair asked me for Robux yesterday. This is on you.",
-      "7/20: Your thumb is doing a full workout chasing this across the page!",
+      "6/20: 🛰️ Hold up! Launching NASA Satellites to verify your excuse...",
+      "7/20: Wait... is there a hair and a mosquito on your phone screen?!",
       "8/20: ⚠️ LOW BATTERY! Even your phone is running out of excuses.",
-      "9/20: You've burned more calories chasing this button than playing an Obby.",
+      "9/20: 💄 Subscribed! You are now enrolled in 'Lobby-Dodgers Anonymous'.",
       "10/20: SHADOW CLONE JUTSU! Which red button is the real one?! 🤡",
-      "11/20: My solo-queue teammates have the survival instincts of a potato.",
+      "11/20: 📞 RING RING! Uh oh, the CEO of Roblox is calling you personally!",
       "12/20: EARTHQUAKE! Your excuse was so heavy it flipped the whole poster upside-down!",
       "13/20: Playing upside-down now?! Just tap the green button!",
       "14/20: Gravity restored! Still chasing the red button across the page?!",
       "15/20: ERROR 277! Even the Roblox servers crashed from all this cap.",
-      "16/20: Look how tiny it's getting—still sprinting corner to corner!",
+      "16/20: 🦎 CAMOUFLAGE MODE! Wait... which button is Green and which is Red?!",
       "17/20: Wait, are you using an auto-clicker or just pure stubbornness?",
       "18/20: HOLD UP! Bot behavior detected. Complete the Anti-Cap CAPTCHA!",
-      "19/20: ONE MORE DODGE! Catch it one last time for the pardon...",
+      "19/20: 🕵️‍♀️ FINAL SECURITY CHECK! Scan your thumb to prove you're actually busy!",
       "20/20: CROWN UNLOCKED! 20/20 survived. The red button officially surrenders!"
     ];
+
+    function showSystemToast(icon, htmlText, duration = 4200) {
+      if (toastTimer) clearTimeout(toastTimer);
+      toastIcon.textContent = icon;
+      toastBody.innerHTML = htmlText;
+      systemToast.classList.add('show');
+      toastTimer = setTimeout(() => {
+        systemToast.classList.remove('show');
+      }, duration);
+    }
 
     // --- 3. Floating Emoji Trail Generator ---
     function spawnEmojiParticle(x, y) {
@@ -794,10 +1063,62 @@
       setTimeout(() => el.remove(), 1000);
     }
 
-    // --- 4. Button Clone Illusion (At Dodge 10) ---
+    // --- 4. Fake Screen Hair / Mosquito Smudge Trap (Dodge 7) ---
+    function triggerSmudgeRoast(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      playSound('clown');
+      screenSmudge.style.display = 'none';
+      showSystemToast(
+        '😂',
+        '<strong>CAUGHT IN 4K ULTRA HD!</strong><br>Did you really just try to wipe that fake hair off your screen?! Focus on the lobby!',
+        5000
+      );
+    }
+    screenSmudge.addEventListener('touchstart', triggerSmudgeRoast, { passive: false });
+    screenSmudge.addEventListener('click', triggerSmudgeRoast);
+
+    // --- 5. NASA 99% Excuse Loading Trap (Dodge 6) ---
+    function startNasaExcuseTrap() {
+      excuseLoadModal.style.display = 'flex';
+      closeExcuseModalBtn.style.display = 'none';
+      excuseProgressFill.style.background = 'linear-gradient(90deg, #2d5a27, #52b788)';
+      excuseProgressFill.style.width = '12%';
+      excusePctText.textContent = '12%';
+      excuseLoadStatus.textContent = "🛰️ Contacting NASA Satellites to locate Koyel's last remaining brain cell...";
+
+      setTimeout(() => {
+        excuseProgressFill.style.width = '54%';
+        excusePctText.textContent = '54%';
+        excuseLoadStatus.textContent = "🔎 Searching all 7 continents for a single believable excuse...";
+      }, 1100);
+
+      setTimeout(() => {
+        excuseProgressFill.style.width = '99%';
+        excusePctText.textContent = '99% (Almost verified...)';
+        excuseLoadStatus.textContent = "🧪 Testing 'Sorry I was busy' in the Sheriff's Cap Laboratory...";
+      }, 2300);
+
+      setTimeout(() => {
+        playSound('alarm');
+        document.body.classList.add('shake-screen');
+        setTimeout(() => document.body.classList.remove('shake-screen'), 500);
+        excuseProgressFill.style.background = '#e63946';
+        excuseProgressFill.style.width = '0%';
+        excusePctText.textContent = '0% — CRITICAL CAP OVERLOAD 💀';
+        excuseLoadStatus.innerHTML = "💥 <strong>SYSTEM EXPLODED:</strong> 0% Real Work Found! 400 Terabytes of Pure Unfiltered Yapping, Bed-Rotting & Reels Scrolling Detected! 🧢🤡";
+        closeExcuseModalBtn.style.display = 'block';
+      }, 4200);
+    }
+
+    closeExcuseModalBtn.addEventListener('click', () => {
+      excuseLoadModal.style.display = 'none';
+    });
+
+    // --- 6. Button Clone Illusion (At Dodge 10) ---
     function spawnDecoyClones() {
       clearDecoys();
-      const labels = ["Decoy Button", "Nice Try 🧢", "Wrong One 💀"];
+      const labels = ["Still Busy 🧢", "Real Button (Trust)", "Tap Me Noob 💀"];
       labels.forEach(text => {
         const decoy = document.createElement('button');
         decoy.className = 'decoy-btn';
@@ -809,8 +1130,8 @@
 
         const popDecoy = (ev) => {
           ev.preventDefault();
-          playSound('oof');
-          decoy.textContent = "🤡 CLOWNED!";
+          playSound('clown');
+          decoy.textContent = "🤡 BAITED HAHA!";
           decoy.style.backgroundColor = "#2b1d0e";
           decoy.style.transform = "scale(1.2)";
           setTimeout(() => decoy.remove(), 450);
@@ -828,9 +1149,82 @@
       activeDecoys = [];
     }
 
-    // --- 5. Update Mugshot, Skill Bar, & Robux Fine ---
+    // --- 7. CEO Phone Call Modal Controls (Dodge 11) ---
+    declineCeoBtn.addEventListener('click', () => {
+      playSound('boom');
+      robuxTax += 5000;
+      robuxTaxAmount.textContent = robuxTax.toLocaleString();
+      ceoCallModal.style.display = 'none';
+      showSystemToast(
+        '💸',
+        '<strong>+5,000 ROBUX COWARDICE TAX ADDED!</strong><br>You hung up on the CEO of Roblox?! He is banishing you to Brookhaven!',
+        4500
+      );
+    });
+
+    answerCeoBtn.addEventListener('click', () => {
+      ceoCallModal.style.display = 'none';
+      acceptBtn.click();
+    });
+
+    // --- 8. Biometric Thumb Scanner (Dodge 19) ---
+    let scanInterval = null;
+    let scanProgress = 0;
+    let scanCompleted = false;
+
+    function startThumbHold(e) {
+      if (scanCompleted) return;
+      if (e) e.preventDefault();
+      thumbScannerBtn.classList.add('scanning');
+      thumbScanResult.textContent = "Scanning sweat levels & daily schedule...";
+      playSound('oof');
+
+      clearInterval(scanInterval);
+      scanInterval = setInterval(() => {
+        scanProgress += 6;
+        if (scanProgress >= 96) {
+          scanProgress = 100;
+          clearInterval(scanInterval);
+          scanCompleted = true;
+          playSound('alarm');
+          thumbScannerBtn.classList.remove('scanning');
+          thumbScannerBtn.textContent = "🤡";
+          thumbScanFill.style.width = '100%';
+          thumbScanFill.style.background = '#e63946';
+          thumbScanResult.innerHTML = "🚨 <strong>SCAN COMPLETE:</strong> 0% Busy! 100% Scared of Losing in Roblox & Scrolling Reels Under A Blanket!";
+          closeThumbScanBtn.style.display = 'block';
+        } else {
+          thumbScanFill.style.width = `${scanProgress}%`;
+          if (scanProgress === 42) {
+            thumbScanResult.textContent = "Detecting 99.9% Cap in bloodstream...";
+          } else if (scanProgress === 78) {
+            thumbScanResult.textContent = "Checking calendar... 0 meetings found!";
+          }
+        }
+      }, 140);
+    }
+
+    function stopThumbHold() {
+      if (scanCompleted) return;
+      clearInterval(scanInterval);
+      thumbScannerBtn.classList.remove('scanning');
+      scanProgress = 0;
+      thumbScanFill.style.width = '0%';
+      thumbScanResult.textContent = "⚠️ You lifted your thumb too early! Hold for 3 full seconds!";
+    }
+
+    thumbScannerBtn.addEventListener('mousedown', startThumbHold);
+    thumbScannerBtn.addEventListener('touchstart', startThumbHold, { passive: false });
+    window.addEventListener('mouseup', stopThumbHold);
+    window.addEventListener('touchend', stopThumbHold);
+
+    closeThumbScanBtn.addEventListener('click', () => {
+      thumbScanModal.style.display = 'none';
+    });
+
+    // --- 9. Update Mugshot, Skill Bar, & Chaos Milestones ---
     function updateChaosState(count) {
-      robuxTax = count * 500;
+      robuxTax += 500;
       robuxTaxAmount.textContent = robuxTax.toLocaleString();
       robuxFineBanner.classList.add('siren');
       setTimeout(() => robuxFineBanner.classList.remove('siren'), 220);
@@ -866,12 +1260,48 @@
         statusStamp.textContent = "STATUS: DODGE QUEEN";
       }
 
+      // Reset Camouflage if not on Dodge 16
+      if (count !== 16) {
+        busyBtn.classList.remove('camo-green');
+        acceptBtn.classList.remove('camo-red');
+        if (count < 20) busyBtn.textContent = "Still Busy";
+        acceptBtn.textContent = "Keep Promise (Hop on Roblox)";
+      }
+
+      // Milestone Trolls
+      if (count === 3) {
+        showSystemToast(
+          '📱',
+          '<strong>LIVE PHONE TELEMETRY:</strong><br>0% Working/Studying • 99.8% Scrolling Reels & Ghosting Lobbies.',
+          4200
+        );
+      }
+      if (count === 6) {
+        startNasaExcuseTrap();
+      }
+      if (count === 7) {
+        screenSmudge.style.display = 'block';
+      }
       if (count === 8) {
-        batteryToast.classList.add('show');
-        setTimeout(() => batteryToast.classList.remove('show'), 4000);
+        showSystemToast(
+          '🪫',
+          '<strong>Low Excuse Battery (2%)</strong><br>Your phone is critically low on fake excuses. Join a Roblox lobby immediately.',
+          4000
+        );
+      }
+      if (count === 9) {
+        showSystemToast(
+          '🤡',
+          '<strong>SUBSCRIPTION CONFIRMED!</strong><br>Koyel is now subscribed to "How To Stop Ghosting Your Friends 101".',
+          4200
+        );
       }
       if (count === 10) {
         spawnDecoyClones();
+      }
+      if (count === 11) {
+        playSound('alarm');
+        ceoCallModal.style.display = 'flex';
       }
       if (count === 12) {
         clearDecoys();
@@ -885,13 +1315,23 @@
       if (count === 15) {
         robloxCrashModal.style.display = 'flex';
       }
+      if (count === 16) {
+        // Camouflage Color Swap!
+        busyBtn.classList.add('camo-green');
+        acceptBtn.classList.add('camo-red');
+        busyBtn.textContent = "Hop On Roblox (Wait Don't Tap)";
+        acceptBtn.textContent = "Still Busy (100% Real Tap Me)";
+      }
       if (count === 18) {
         captchaModal.style.display = 'flex';
         setTimeout(() => captchaInput.focus(), 100);
       }
+      if (count === 19) {
+        thumbScanModal.style.display = 'flex';
+      }
     }
 
-    // --- 6. Full-Viewport Sprinting Button Logic ---
+    // --- 10. Full-Viewport Sprinting Button Logic ---
     function dodgeButton(e) {
       if (dodgeCount >= maxDodges) return;
 
@@ -910,10 +1350,18 @@
         document.body.appendChild(busyBtn);
       }
 
-      playSound('oof');
-      roastText.textContent = roasts[dodgeCount];
       dodgeCount++;
 
+      // Every 4th dodge plays Clown Horn or Vine Boom
+      if (dodgeCount % 8 === 0) {
+        playSound('boom');
+      } else if (dodgeCount % 4 === 0) {
+        playSound('clown');
+      } else {
+        playSound('oof');
+      }
+
+      roastText.textContent = roasts[dodgeCount - 1];
       updateChaosState(dodgeCount);
 
       const btnWidth = busyBtn.offsetWidth || 160;
@@ -931,19 +1379,26 @@
         targetY = maxY - targetY + 40;
       }
 
-      requestAnimationFrame(() => {
-        busyBtn.style.left = `${Math.min(maxX, Math.max(pad, targetX))}px`;
-        busyBtn.style.top = `${Math.min(maxY, Math.max(60, targetY))}px`;
+      const finalX = Math.min(maxX, Math.max(pad, targetX));
+      const finalY = Math.min(maxY, Math.max(60, targetY));
 
-        const greenScale = 1 + (dodgeCount * 0.011);
+      // Track total distance her thumb chased the button
+      totalPixelsChased += Math.round(Math.hypot(finalX - rect.left, finalY - rect.top));
+
+      requestAnimationFrame(() => {
+        busyBtn.style.left = `${finalX}px`;
+        busyBtn.style.top = `${finalY}px`;
+
+        const greenScale = 1 + (dodgeCount * 0.012);
         acceptBtn.style.transform = `scale(${greenScale})`;
 
-        const redScale = Math.max(0.72, 1 - (dodgeCount * 0.014));
+        const redScale = Math.max(0.72, 1 - (dodgeCount * 0.013));
         const randomTilt = (Math.random() * 22 - 11).toFixed(1);
         busyBtn.style.transform = `scale(${redScale}) rotate(${randomTilt}deg)`;
 
         if (dodgeCount === maxDodges) {
           clearDecoys();
+          screenSmudge.style.display = 'none';
           busyBtn.textContent = "👑 Claim Official AFK Pass";
           busyBtn.classList.add('surrendered');
           busyBtn.style.left = `${Math.max(pad, (window.innerWidth - 220) / 2)}px`;
@@ -1002,6 +1457,10 @@
     busyBtn.addEventListener('mouseover', dodgeButton);
     busyBtn.addEventListener('touchstart', dodgeButton, { passive: false });
 
+    function getMarathonMeters() {
+      return Math.max(1, (totalPixelsChased / 95).toFixed(1));
+    }
+
     // Final Outcomes
     busyBtn.addEventListener('click', () => {
       if (dodgeCount < maxDodges) {
@@ -1010,28 +1469,48 @@
       }
       playSound('win');
       clearDecoys();
+      screenSmudge.style.display = 'none';
       posterCard.classList.remove('flipped');
       busyBtn.style.display = 'none';
       statusStamp.textContent = "PARDONED (FOR NOW)";
       interactiveSection.style.display = 'none';
       resultPanel.style.display = 'block';
+
+      const meters = getMarathonMeters();
       resultTitle.textContent = "ALRIGHT, YOU WIN!";
-      resultDesc.textContent = `You chased a button across the entire screen 20 times, racked up a ${robuxTax.toLocaleString()} Robux Fine, and typed out the Anti-Cap CAPTCHA just to stay offline. Catch you on Roblox next time!`;
-      receiptMessage = `👑 [SHERIFF PARDON]: I survived all 20 full-screen dodges, racked up a ${robuxTax.toLocaleString()} Robux Fine, and typed out the Anti-Cap CAPTCHA for my AFK Pass!`;
+      resultDesc.textContent = `You survived NASA's Brain-Cell Scan, hung up on the CEO of Roblox, and chased a button across the screen 20 times just to stay offline!`;
+      statsReceiptBox.innerHTML = `
+        <strong>📊 OFFICIAL SHERIFF TELEMETRY RECEIPT:</strong><br>
+        • <strong>Thumb Marathon Sprinted:</strong> ${meters} meters (${totalPixelsChased.toLocaleString()} px)<br>
+        • <strong>Calories Burned Dodging:</strong> ${(dodgeCount * 1.4).toFixed(1)} kcal<br>
+        • <strong>Total Robux Debt Owed:</strong> ${robuxTax.toLocaleString()} Robux<br>
+        • <strong>Biometric Verdict:</strong> 100% Certified Lobby Dodger 👑
+      `;
+      receiptMessage = `👑 [SHERIFF PARDON]: My thumb sprinted ${meters} meters across the screen (20/20 dodges), survived NASA's Cap-Scan, and racked up a ${robuxTax.toLocaleString()} Robux Fine for my AFK Pass!`;
     });
 
     acceptBtn.addEventListener('click', () => {
       playSound('win');
       clearDecoys();
+      screenSmudge.style.display = 'none';
       posterCard.classList.remove('flipped');
       busyBtn.style.display = 'none';
       statusStamp.textContent = "PROMISE KEPT!";
       statusStamp.classList.add('resolved');
       interactiveSection.style.display = 'none';
       resultPanel.style.display = 'block';
+
+      const meters = getMarathonMeters();
       resultTitle.textContent = "PROMISE OFFICIALLY KEPT!";
-      resultDesc.textContent = `The Sheriff has waived your ${robuxTax.toLocaleString()} Robux fine (after ${dodgeCount} dodge attempts). Fire up Roblox and drop the lobby invite!`;
-      receiptMessage = `🤠 [BOUNTY CLAIMED]: Keeping my promise after ${dodgeCount} button dodges (and a ${robuxTax.toLocaleString()} Robux fine)! Hopping on Roblox—drop the invite.`;
+      resultDesc.textContent = `The Sheriff has waived your ${robuxTax.toLocaleString()} Robux fine! Fire up Roblox right now and drop the lobby invite!`;
+      statsReceiptBox.innerHTML = `
+        <strong>📊 OFFICIAL SHERIFF TELEMETRY RECEIPT:</strong><br>
+        • <strong>Dodges Before Surrender:</strong> ${dodgeCount} / 20<br>
+        • <strong>Thumb Distance Sprinted:</strong> ${meters} meters<br>
+        • <strong>Robux Fine Waived:</strong> ${robuxTax.toLocaleString()} Robux<br>
+        • <strong>Status:</strong> Hopping on Roblox right now! 🎮
+      `;
+      receiptMessage = `🤠 [BOUNTY CLAIMED]: Keeping my promise after ${dodgeCount} button dodges (${meters}m thumb sprint & ${robuxTax.toLocaleString()} Robux fine waived)! Hopping on Roblox—drop the invite!`;
     });
 
     copyBtn.addEventListener('click', () => {
