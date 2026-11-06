@@ -48,24 +48,10 @@
       animation: earthquake 0.45s ease-in-out;
     }
 
-    /* Fake Camera Shutter Flash (Dodge 4) */
-    .camera-flash {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #ffffff;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 10005;
-      transition: opacity 0.08s ease-out;
-    }
-    .camera-flash.snap {
-      opacity: 0.95;
-    }
-
     /* Top System Toasts */
     .system-toast {
       position: fixed;
-      top: -120px;
+      top: -130px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(20, 20, 20, 0.97);
@@ -104,7 +90,6 @@
       z-index: 9850;
       cursor: pointer;
       touch-action: none;
-      /* Slight natural micro-jiggle when page shakes */
       transform: rotate(-4deg);
     }
 
@@ -467,7 +452,7 @@
       color: #fff;
       font-family: Arial, Helvetica, sans-serif;
       width: 100%;
-      max-width: 345px;
+      max-width: 350px;
       border-radius: 10px;
       padding: 20px;
       text-align: center;
@@ -583,6 +568,64 @@
     .ego-choice-btn:hover, .ego-choice-btn:active {
       background: #2d5a27;
       color: #fff;
+    }
+
+    /* Overheating 420°C Button Box (Dodge 14) */
+    .hot-btn-visual {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff2a00, #ff8800);
+      color: #fff;
+      font-family: 'Special Elite', monospace;
+      font-weight: bold;
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: 2px solid #fff;
+      box-shadow: 0 0 22px rgba(255, 60, 0, 0.9);
+      margin: 8px 0 12px;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.3s, box-shadow 0.3s;
+    }
+
+    .hot-btn-visual.moaning {
+      transform: scale(1.12) rotate(-3deg);
+      background: linear-gradient(135deg, #ff4d94, #ff85b3);
+      box-shadow: 0 0 28px rgba(255, 77, 148, 0.95);
+    }
+
+    .hot-btn-visual.cooled {
+      background: linear-gradient(135deg, #0096c7, #48cae4);
+      box-shadow: 0 0 20px rgba(72, 202, 228, 0.8);
+    }
+
+    .splash-water-btn {
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-weight: bold;
+      font-size: 0.92rem;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0, 119, 182, 0.5);
+      transition: transform 0.1s, background 0.2s;
+    }
+
+    .splash-water-btn:active {
+      transform: scale(0.96);
+    }
+
+    .raw-tap-btn {
+      background: #3a2222;
+      color: #ff9999;
+      border: 1px dashed #ff4d4d;
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-size: 0.78rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
     }
 
     /* Bracketed CAPTCHA Prompt & Text Input (Dodge 18) */
@@ -720,9 +763,6 @@
 </head>
 <body>
 
-  <!-- Camera Shutter Flash (Dodge 4) -->
-  <div class="camera-flash" id="cameraFlash"></div>
-
   <!-- Top System Toast -->
   <div class="system-toast" id="systemToast">
     <span class="toast-icon" id="toastIcon">🪫</span>
@@ -736,7 +776,6 @@
   <div class="realistic-hair-overlay" id="screenHair">
     <svg viewBox="0 0 270 230" width="270" height="230" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Soft LCD depth shadow under the hair strand -->
         <filter id="hairDropShadow" x="-10%" y="-10%" width="120%" height="120%">
           <feGaussianBlur stdDeviation="0.95" />
         </filter>
@@ -744,22 +783,28 @@
       <!-- Invisible wide hit-area along the curve so any swipe/tap catches it -->
       <path d="M 18 28 C 75 58, 45 148, 138 168 C 195 180, 232 142, 256 196"
             stroke="transparent" stroke-width="38" fill="none" />
-
-      <!-- 1. LCD Screen Glass Shadow (offset by 1.3px to look like it's resting on top of the glass) -->
+      <!-- 1. LCD Screen Glass Shadow -->
       <path d="M 19.3 29.5 C 76.3 59.5, 46.3 149.5, 139.3 169.5 C 196.3 181.5, 233.3 143.5, 257.3 197.5"
             stroke="rgba(0, 0, 0, 0.34)" stroke-width="1.15" fill="none" filter="url(#hairDropShadow)" stroke-linecap="round" />
-
-      <!-- 2. Main Natural Dark Hair Strand (tapered look, realistic 0.75px width) -->
+      <!-- 2. Main Natural Dark Hair Strand -->
       <path d="M 18 28 C 75 58, 45 148, 138 168 C 195 180, 232 142, 256 196"
             stroke="#0e0a07" stroke-width="0.78" fill="none" opacity="0.94" stroke-linecap="round" />
-
-      <!-- 3. Microscopic Keratin Light Reflection Highlight along the mid-bend -->
+      <!-- 3. Microscopic Keratin Light Reflection Highlight -->
       <path d="M 54 96 C 58 134, 96 159, 138 168"
             stroke="rgba(255, 248, 235, 0.28)" stroke-width="0.32" fill="none" stroke-linecap="round" />
-
-      <!-- 4. Tiny Hair Follicle Root Bulb at the top tip -->
+      <!-- 4. Tiny Hair Follicle Root Bulb -->
       <ellipse cx="17.6" cy="27.7" rx="1.15" ry="0.7" transform="rotate(28 17.6 27.7)" fill="#1c140e" opacity="0.9" />
     </svg>
+  </div>
+
+  <!-- 0. Interactive Dramatic Violin Popup (Dodge 5) -->
+  <div class="modal-overlay" id="violinModal">
+    <div class="roblox-modal">
+      <h4>🎻 World's Smallest Violin</h4>
+      <div style="font-size:3rem; margin: 6px 0; animation: pulseCall 0.8s infinite alternate;">🎻😭</div>
+      <p>Playing a sad symphony for Koyel's poor right thumb, which has been forced to do marathon cardio today instead of playing Roblox.</p>
+      <button class="roblox-btn unlocked" id="pressFViolinBtn">Press [ F ] To Pay Respects For Thumb 🫡</button>
+    </div>
   </div>
 
   <!-- 1. NASA Satellite Brain-Cell & Excuse Detector (Dodge 6) -->
@@ -801,7 +846,25 @@
     </div>
   </div>
 
-  <!-- 4. Fake Roblox Disconnected Popup (Dodge 15) -->
+  <!-- 4. OVERHEATING 420°C BUTTON + 7 WATER SPLASH MOAN PRANK (Dodge 14) -->
+  <div class="modal-overlay" id="overheatModal">
+    <div class="roblox-modal">
+      <h4>🔥 WARNING: BUTTON OVERHEATING (420°C)</h4>
+      <p>The red button ran so fast it reached <strong>420°C</strong>! Blow air on your screen or splash it with cold water <strong>7 times</strong> before touching it:</p>
+      
+      <div class="hot-btn-visual" id="hotBtnVisual">🔥 STILL BUSY (<span id="tempDisplay">420</span>°C)</div>
+      
+      <p id="splashRoastMsg" style="font-size:0.83rem; color:#ffdf6b; min-height:38px; font-weight:bold; margin-bottom:10px;">
+        ⚠️ Do NOT touch the hot button without splashing 7 times!
+      </p>
+
+      <button class="splash-water-btn" id="splashWaterBtn">💦 Splash Cold Water (0 / 7)</button>
+      <button class="raw-tap-btn" id="rawTapHotBtn">👆 Touch Red-Hot Button Directly (Skip Water)</button>
+      <button class="roblox-btn unlocked" id="finishCoolBtn" style="display:none; margin-top:8px;">Button Cooled Down! Keep Chasing 🏃‍♀️</button>
+    </div>
+  </div>
+
+  <!-- 5. Fake Roblox Disconnected Popup (Dodge 15) -->
   <div class="modal-overlay" id="robloxCrashModal">
     <div class="roblox-modal">
       <h4>Disconnected</h4>
@@ -810,7 +873,7 @@
     </div>
   </div>
 
-  <!-- 5. Anti-Cap CAPTCHA Popup (Dodge 18) -->
+  <!-- 6. Anti-Cap CAPTCHA Popup (Dodge 18) -->
   <div class="modal-overlay" id="captchaModal">
     <div class="roblox-modal">
       <h4>🤖 Anti-Cap Security Check</h4>
@@ -824,7 +887,7 @@
     </div>
   </div>
 
-  <!-- 6. Biometric Thumb Lie-Detector Scanner (Dodge 19) -->
+  <!-- 7. Biometric Thumb Lie-Detector Scanner (Dodge 19) -->
   <div class="modal-overlay" id="thumbScanModal">
     <div class="roblox-modal">
       <h4>🕵️‍♀️ Biometric Schedule Scanner</h4>
@@ -940,20 +1003,125 @@
   </div>
 
   <script>
-    // --- 1. Retro Roblox "OOF", Clown Horn, Vine Boom, Shutter & Alarm Synth ---
+    // --- 1. Retro Roblox "OOF", Clown Horn, Sad Violin, Sizzle & Girl Moan Synth ---
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
+
+    function ensureAudio() {
+      if (!audioCtx) audioCtx = new AudioCtx();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    // Realistic Expressive Female-Pitch Formant Moan Synthesizer ("Ahhhh~!")
+    function playMoanSound(splashNum) {
+      if (navigator.vibrate) {
+        navigator.vibrate([50, 30, 180]);
+      }
+      try {
+        ensureAudio();
+        const now = audioCtx.currentTime;
+        const duration = 0.78;
+
+        // Fundamental feminine vocal pitch (rises then sighs down with vibrato)
+        const baseFreq = 330 + (splashNum * 18);
+        const peakFreq = baseFreq + 95;
+        const endFreq  = baseFreq - 45;
+
+        const voiceOsc = audioCtx.createOscillator();
+        const subOsc   = audioCtx.createOscillator();
+        const vibrato  = audioCtx.createOscillator();
+        const vibGain  = audioCtx.createGain();
+
+        // Formant filters for open "Ahhh~" vowel resonance
+        const formant1 = audioCtx.createBiquadFilter();
+        const formant2 = audioCtx.createBiquadFilter();
+        const masterGain = audioCtx.createGain();
+
+        voiceOsc.type = 'sawtooth';
+        subOsc.type   = 'sine';
+
+        // Pitch glide: soft rise into a breathy sigh
+        voiceOsc.frequency.setValueAtTime(baseFreq, now);
+        voiceOsc.frequency.exponentialRampToValueAtTime(peakFreq, now + 0.24);
+        voiceOsc.frequency.exponentialRampToValueAtTime(endFreq, now + duration);
+
+        subOsc.frequency.setValueAtTime(baseFreq, now);
+        subOsc.frequency.exponentialRampToValueAtTime(peakFreq, now + 0.24);
+        subOsc.frequency.exponentialRampToValueAtTime(endFreq, now + duration);
+
+        // Vocal vibrato (5.8 Hz)
+        vibrato.frequency.setValueAtTime(5.8, now);
+        vibGain.gain.setValueAtTime(8.5, now);
+        vibrato.connect(vibGain);
+        vibGain.connect(voiceOsc.frequency);
+        vibGain.connect(subOsc.frequency);
+
+        // Female "Ah" vowel formant frequencies (~820Hz & ~1280Hz)
+        formant1.type = 'bandpass';
+        formant1.frequency.setValueAtTime(820, now);
+        formant1.frequency.linearRampToValueAtTime(740, now + duration);
+        formant1.Q.setValueAtTime(4.2, now);
+
+        formant2.type = 'bandpass';
+        formant2.frequency.setValueAtTime(1320, now);
+        formant2.Q.setValueAtTime(5.0, now);
+
+        // Breathy noise layer for realistic sigh texture
+        const bufferSize = audioCtx.sampleRate * duration;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        const breathFilter = audioCtx.createBiquadFilter();
+        breathFilter.type = 'bandpass';
+        breathFilter.frequency.setValueAtTime(1900, now);
+        breathFilter.Q.setValueAtTime(2.0, now);
+        const breathGain = audioCtx.createGain();
+        breathGain.gain.setValueAtTime(0.08, now);
+        breathGain.gain.exponentialRampToValueAtTime(0.005, now + duration);
+
+        // Smooth swell envelope
+        masterGain.gain.setValueAtTime(0.01, now);
+        masterGain.gain.linearRampToValueAtTime(0.45, now + 0.14);
+        masterGain.gain.setValueAtTime(0.42, now + 0.35);
+        masterGain.gain.exponentialRampToValueAtTime(0.008, now + duration);
+
+        voiceOsc.connect(formant1);
+        voiceOsc.connect(formant2);
+        subOsc.connect(masterGain);
+        formant1.connect(masterGain);
+        formant2.connect(masterGain);
+
+        whiteNoise.connect(breathFilter);
+        breathFilter.connect(breathGain);
+        breathGain.connect(masterGain);
+
+        masterGain.connect(audioCtx.destination);
+
+        voiceOsc.start(now);
+        subOsc.start(now);
+        vibrato.start(now);
+        whiteNoise.start(now);
+
+        voiceOsc.stop(now + duration);
+        subOsc.stop(now + duration);
+        vibrato.stop(now + duration);
+        whiteNoise.stop(now + duration);
+      } catch (e) {}
+    }
 
     function playSound(type) {
       if (navigator.vibrate) {
         if (type === 'oof') navigator.vibrate(40);
-        else if (type === 'clown' || type === 'boom') navigator.vibrate([80, 40, 120]);
+        else if (type === 'clown' || type === 'boom' || type === 'sizzle') navigator.vibrate([80, 40, 120]);
         else if (type === 'alarm') navigator.vibrate([150, 60, 150, 60, 200]);
         else navigator.vibrate([60, 40, 90]);
       }
       try {
-        if (!audioCtx) audioCtx = new AudioCtx();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        ensureAudio();
         const now = audioCtx.currentTime;
 
         if (type === 'oof') {
@@ -993,18 +1161,35 @@
           gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
           osc.start(now);
           osc.stop(now + 0.45);
-        } else if (type === 'shutter') {
+        } else if (type === 'violin') {
+          // Sad dramatic violin melody
+          const notes = [659.25, 622.25, 587.33, 523.25];
+          notes.forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.28);
+            gain.gain.setValueAtTime(0.01, now + idx * 0.28);
+            gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.28 + 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.008, now + (idx + 1) * 0.28);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + idx * 0.28);
+            osc.stop(now + (idx + 1) * 0.28);
+          });
+        } else if (type === 'sizzle') {
+          // Hot pan sizzle + burn alarm
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.exponentialRampToValueAtTime(180, now + 0.35);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
           osc.connect(gain);
           gain.connect(audioCtx.destination);
-          osc.type = 'square';
-          osc.frequency.setValueAtTime(1200, now);
-          osc.frequency.exponentialRampToValueAtTime(300, now + 0.06);
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.06);
           osc.start(now);
-          osc.stop(now + 0.06);
+          osc.stop(now + 0.35);
         } else if (type === 'alarm') {
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
@@ -1054,7 +1239,6 @@
     const toastIcon = document.getElementById('toastIcon');
     const toastBody = document.getElementById('toastBody');
     const screenHair = document.getElementById('screenHair');
-    const cameraFlash = document.getElementById('cameraFlash');
 
     const meterFill = document.getElementById('meterFill');
     const meterLabel = document.getElementById('meterLabel');
@@ -1064,6 +1248,9 @@
     const faceCrown = document.getElementById('faceCrown');
 
     // Modals
+    const violinModal = document.getElementById('violinModal');
+    const pressFViolinBtn = document.getElementById('pressFViolinBtn');
+
     const excuseLoadModal = document.getElementById('excuseLoadModal');
     const excuseLoadStatus = document.getElementById('excuseLoadStatus');
     const excuseProgressFill = document.getElementById('excuseProgressFill');
@@ -1078,6 +1265,14 @@
     const egoChoice1 = document.getElementById('egoChoice1');
     const egoChoice2 = document.getElementById('egoChoice2');
     const egoChoice3 = document.getElementById('egoChoice3');
+
+    const overheatModal = document.getElementById('overheatModal');
+    const hotBtnVisual = document.getElementById('hotBtnVisual');
+    const tempDisplay = document.getElementById('tempDisplay');
+    const splashRoastMsg = document.getElementById('splashRoastMsg');
+    const splashWaterBtn = document.getElementById('splashWaterBtn');
+    const rawTapHotBtn = document.getElementById('rawTapHotBtn');
+    const finishCoolBtn = document.getElementById('finishCoolBtn');
 
     const robloxCrashModal = document.getElementById('robloxCrashModal');
     const closeCrashBtn = document.getElementById('closeCrashBtn');
@@ -1103,13 +1298,12 @@
 
     const brainrotEmojis = ['💀', '🧢', '🤡', '🌾', '🏃‍♀️', '💨', '🎻'];
 
-    // Notice Dodge 7 does NOT mention the hair so it doesn't spoil the illusion!
     const roasts = [
       "1/20: OOF! Look at it run! Missed—just like you missed our lobby.",
-      "2/20: Catch it if you can! Remember when you said 'I'll come play'?",
+      "2/20: 🏆 NEW WORLD RECORD! Fastest thumb in India at running away from Roblox!",
       "3/20: 📡 SATELLITE ALERT: We just scanned your phone's background activity!",
-      "4/20: 📸 SNAP! Caught you smirking at your screen in 4K Ultra HD!",
-      "5/20: Sunglasses unlocked! Running all over the screen now!",
+      "4/20: 🛵 ZOMATO ALERT: Your 'Sorry I Was Busy' Noodles are on the way!",
+      "5/20: 🎻 Cue the world's smallest violin for your poor overworked thumb!",
       "6/20: 🛰️ Hold up! Launching NASA Satellites to verify your excuse...",
       "7/20: Your thumb is doing a full gym workout chasing this button!",
       "8/20: ⚠️ LOW BATTERY! Even your phone is running out of excuses.",
@@ -1118,16 +1312,16 @@
       "11/20: 📞 RING RING! Uh oh, the CEO of Roblox is calling you personally!",
       "12/20: EARTHQUAKE! Your excuse was so heavy it flipped the whole poster upside-down!",
       "13/20: 📝 Hold up! Fill out the Official Skill-Issue Survey to continue!",
-      "14/20: Gravity restored! Still chasing the red button across the page?!",
+      "14/20: 🔥 OVERHEAT ALERT! The button hit 420°C—splash water on it 7 times!",
       "15/20: ERROR 277! Even the Roblox servers crashed from all this cap.",
       "16/20: 🦎 CAMOUFLAGE MODE! Wait... which button is Green and which is Red?!",
-      "17/20: 🚑 Calling an ambulance for your thumb cramps right now...",
+      "17/20: 🏥 ICICI THUMB INSURANCE: Your thumb just filed a harassment complaint!",
       "18/20: HOLD UP! Bot behavior detected. Complete the Anti-Cap CAPTCHA!",
       "19/20: 🕵️‍♀️ FINAL SECURITY CHECK! Scan your thumb to prove you're actually busy!",
       "20/20: CROWN UNLOCKED! 20/20 survived. The red button officially surrenders!"
     ];
 
-    function showSystemToast(icon, htmlText, duration = 4300) {
+    function showSystemToast(icon, htmlText, duration = 4500) {
       if (toastTimer) clearTimeout(toastTimer);
       toastIcon.textContent = icon;
       toastBody.innerHTML = htmlText;
@@ -1138,10 +1332,10 @@
     }
 
     // --- 3. Floating Emoji Trail Generator ---
-    function spawnEmojiParticle(x, y) {
+    function spawnEmojiParticle(x, y, customEmoji = null) {
       const el = document.createElement('div');
       el.className = 'emoji-particle';
-      el.textContent = brainrotEmojis[Math.floor(Math.random() * brainrotEmojis.length)];
+      el.textContent = customEmoji || brainrotEmojis[Math.floor(Math.random() * brainrotEmojis.length)];
       el.style.left = `${x}px`;
       el.style.top = `${y}px`;
       document.body.appendChild(el);
@@ -1156,15 +1350,26 @@
       screenHair.style.display = 'none';
       showSystemToast(
         '😂',
-        '<strong>AHAHAHA CAUGHT YOU WIPING YOUR SCREEN!! 💀</strong><br>That hair was 100% FAKE—just like your promise to hop on Roblox!',
-        5500
+        '<strong>AHAHAHA CAUGHT YOU WIPING YOUR SCREEN!! 💀</strong><br>That hair was 100% FAKE! Got you blowing on your phone and swiping at thin air!',
+        5800
       );
     }
     screenHair.addEventListener('touchstart', triggerHairWipeRoast, { passive: false });
     screenHair.addEventListener('touchmove', triggerHairWipeRoast, { passive: false });
     screenHair.addEventListener('click', triggerHairWipeRoast);
 
-    // --- 5. NASA 99% Excuse Loading Trap (Dodge 6) ---
+    // --- 5. Dramatic Violin Modal (Dodge 5) ---
+    pressFViolinBtn.addEventListener('click', () => {
+      playSound('oof');
+      violinModal.style.display = 'none';
+      showSystemToast(
+        '🫡',
+        '<strong>RESPECTS PAID [F]:</strong><br>1x Prayer sent for Koyel\'s exhausted right thumb.',
+        3800
+      );
+    });
+
+    // --- 6. NASA 99% Excuse Loading Trap (Dodge 6) ---
     function startNasaExcuseTrap() {
       excuseLoadModal.style.display = 'flex';
       closeExcuseModalBtn.style.display = 'none';
@@ -1201,7 +1406,7 @@
       excuseLoadModal.style.display = 'none';
     });
 
-    // --- 6. Button Clone Illusion (At Dodge 10) ---
+    // --- 7. Button Clone Illusion (At Dodge 10) ---
     function spawnDecoyClones() {
       clearDecoys();
       const labels = ["Still Busy 🧢", "Real Button (Trust)", "Tap Me Noob 💀"];
@@ -1235,7 +1440,7 @@
       activeDecoys = [];
     }
 
-    // --- 7. CEO Phone Call Modal Controls (Dodge 11) ---
+    // --- 8. CEO Phone Call Modal Controls (Dodge 11) ---
     declineCeoBtn.addEventListener('click', () => {
       playSound('boom');
       robuxTax += 5000;
@@ -1253,7 +1458,7 @@
       acceptBtn.click();
     });
 
-    // --- 8. Ego Trap Survey Controls (Dodge 13) ---
+    // --- 9. Ego Trap Survey Controls (Dodge 13) ---
     function handleEgoChoice(confessionText) {
       playSound('clown');
       egoTrapModal.style.display = 'none';
@@ -1267,7 +1472,74 @@
     egoChoice2.addEventListener('click', () => handleEgoChoice("Parkour reflexes expired in 2022"));
     egoChoice3.addEventListener('click', () => handleEgoChoice("Held hostage by bed & blanket"));
 
-    // --- 9. Biometric Thumb Scanner (Dodge 19) ---
+    // --- 10. OVERHEATING 420°C BUTTON + 7 WATER SPLASH MOAN PRANK (Dodge 14) ---
+    let splashCount = 0;
+    const maxSplashes = 7;
+
+    const moanLines = [
+      "😳 1/7: 'Ahhhh~!' ...WAIT PAUSE!! Why did the button just moan like that?! 💀",
+      "😩 2/7: 'Mmm-ahhh~!' Yo lower your phone volume before someone hears this!! 😭",
+      "💦 3/7: 'Aaahhh~!' Stop splashing it so aggressively, it's enjoying it too much!!",
+      "🥵 4/7: 'Oooo-ahhh~!' Bro everyone in the house thinks you're watching something sus!!",
+      "🫣 5/7: 'Haaah~!' The button is blushing pink! 2 more splashes to go!",
+      "😵‍💫 6/7: 'Ahhhhh~!' Caught you smiling while making a red button moan 6 times in a row!",
+      "❄️ 7/7: 'Phew~!' Button cooled down to 0°C! Your speaker history is officially ruined 💀"
+    ];
+
+    const dryTapRoasts = [
+      "🔥 OUCH!! SIZZLE!! Did you really just raw-dog a 420°C button without splashing water?! Your thumb is now Deep-Fried KFC Crispy Chicken! 🍗💀 Splash the water!",
+      "🚨 THIRD-DEGREE THUMB BURN! Why are you touching it dry?! The button likes it WET—hit the 💦 Splash Cold Water button first!!",
+      "🍳 SIZZLE!! You just cooked your fingerprint off! Follow instructions noob, splash the water all 7 times!"
+    ];
+    let dryTapIndex = 0;
+
+    splashWaterBtn.addEventListener('click', () => {
+      if (splashCount >= maxSplashes) return;
+      splashCount++;
+
+      // Play the vocal moan synth!
+      playMoanSound(splashCount);
+
+      const newTemp = Math.max(0, 420 - (splashCount * 60));
+      tempDisplay.textContent = newTemp;
+      splashWaterBtn.textContent = `💦 Splash Cold Water (${splashCount} / 7)`;
+      splashRoastMsg.style.color = "#ffdf6b";
+      splashRoastMsg.textContent = moanLines[splashCount - 1];
+
+      // Visual blush & water particle effect
+      hotBtnVisual.classList.add('moaning');
+      setTimeout(() => hotBtnVisual.classList.remove('moaning'), 380);
+      const rect = hotBtnVisual.getBoundingClientRect();
+      spawnEmojiParticle(rect.left + rect.width / 2, rect.top, '💦');
+
+      if (splashCount === maxSplashes) {
+        hotBtnVisual.classList.add('cooled');
+        hotBtnVisual.innerHTML = "❄️ COOLED DOWN (0°C)";
+        splashWaterBtn.style.display = 'none';
+        rawTapHotBtn.style.display = 'none';
+        finishCoolBtn.style.display = 'block';
+      }
+    });
+
+    function triggerDryTapRoast() {
+      if (splashCount >= maxSplashes) return;
+      playSound('sizzle');
+      document.body.classList.add('shake-screen');
+      setTimeout(() => document.body.classList.remove('shake-screen'), 450);
+
+      splashRoastMsg.style.color = "#ff6b6b";
+      splashRoastMsg.textContent = dryTapRoasts[dryTapIndex % dryTapRoasts.length];
+      dryTapIndex++;
+    }
+
+    rawTapHotBtn.addEventListener('click', triggerDryTapRoast);
+    hotBtnVisual.addEventListener('click', triggerDryTapRoast);
+
+    finishCoolBtn.addEventListener('click', () => {
+      overheatModal.style.display = 'none';
+    });
+
+    // --- 11. Biometric Thumb Scanner (Dodge 19) ---
     let scanInterval = null;
     let scanProgress = 0;
     let scanCompleted = false;
@@ -1322,7 +1594,7 @@
       thumbScanModal.style.display = 'none';
     });
 
-    // --- 10. Update Mugshot, Skill Bar, & Chaos Milestones ---
+    // --- 12. Update Mugshot, Skill Bar, & Chaos Milestones ---
     function updateChaosState(count) {
       robuxTax += 500;
       robuxTaxAmount.textContent = robuxTax.toLocaleString();
@@ -1369,6 +1641,13 @@
       }
 
       // Milestone Trolls
+      if (count === 2) {
+        showSystemToast(
+          '🏆',
+          '<strong>GUINNESS WORLD RECORD UNLOCKED!</strong><br>Fastest Thumb in India when it comes to running away from a 10-minute Roblox game!',
+          4600
+        );
+      }
       if (count === 3) {
         showSystemToast(
           '📱',
@@ -1377,15 +1656,17 @@
         );
       }
       if (count === 4) {
-        // Fake Front Camera Flash!
-        playSound('shutter');
-        cameraFlash.classList.add('snap');
-        setTimeout(() => cameraFlash.classList.remove('snap'), 140);
+        // Fake Zomato / Swiggy Order Alert!
         showSystemToast(
-          '📸',
-          '<strong>FRONT CAMERA PHOTO SAVED!</strong><br>Caught Koyel smiling at her phone in 4K while dodging the lobby! Sending to Sheriff...',
-          4500
+          '🛵',
+          '<strong>ZOMATO ORDER CONFIRMED:</strong><br>1x Extra-Large Bowl of "Sorry I Was Busy" Noodles & 2 Liters of Pure Cap Juice arriving at Koyel\'s house in 10 mins!',
+          5200
         );
+      }
+      if (count === 5) {
+        // Interactive Dramatic Violin Popup!
+        playSound('violin');
+        violinModal.style.display = 'flex';
       }
       if (count === 6) {
         startNasaExcuseTrap();
@@ -1426,12 +1707,12 @@
       }
       if (count === 14) {
         posterCard.classList.remove('flipped');
+        overheatModal.style.display = 'flex';
       }
       if (count === 15) {
         robloxCrashModal.style.display = 'flex';
       }
       if (count === 16) {
-        // Camouflage Color Swap!
         busyBtn.classList.add('camo-green');
         acceptBtn.classList.add('camo-red');
         busyBtn.textContent = "Hop On Roblox (Wait Don't Tap)";
@@ -1439,9 +1720,9 @@
       }
       if (count === 17) {
         showSystemToast(
-          '🚑',
-          '<strong>MEDICAL DISPATCH:</strong><br>Sending 1x Ice Pack & Volini Spray for Koyel\'s thumb after sprinting 17 times across the screen.',
-          4300
+          '🏥',
+          '<strong>ICICI THUMB INSURANCE:</strong><br>Your right thumb has filed a harassment complaint against you for making it sprint across the screen 17 times.',
+          5000
         );
       }
       if (count === 18) {
@@ -1453,7 +1734,7 @@
       }
     }
 
-    // --- 11. Full-Viewport Sprinting Button Logic ---
+    // --- 13. Full-Viewport Sprinting Button Logic ---
     function dodgeButton(e) {
       if (dodgeCount >= maxDodges) return;
 
@@ -1477,9 +1758,9 @@
       // Audio variation
       if (dodgeCount % 8 === 0) {
         playSound('boom');
-      } else if (dodgeCount % 4 === 0 && dodgeCount !== 4) {
+      } else if (dodgeCount % 4 === 0) {
         playSound('clown');
-      } else if (dodgeCount !== 4) {
+      } else if (dodgeCount !== 5) {
         playSound('oof');
       }
 
@@ -1599,7 +1880,7 @@
 
       const meters = getMarathonMeters();
       resultTitle.textContent = "ALRIGHT, YOU WIN!";
-      resultDesc.textContent = `You survived NASA's Brain-Cell Scan, hung up on the CEO of Roblox, tried to wipe a fake hair off your screen, and chased a button 20 times just to stay offline!`;
+      resultDesc.textContent = `You survived NASA's Brain-Cell Scan, splashed water 7 times on a moaning button, tried to wipe a fake hair off your screen, and chased a button 20 times just to stay offline!`;
       statsReceiptBox.innerHTML = `
         <strong>📊 OFFICIAL SHERIFF TELEMETRY RECEIPT:</strong><br>
         • <strong>Thumb Marathon Sprinted:</strong> ${meters} meters (${totalPixelsChased.toLocaleString()} px)<br>
@@ -1607,7 +1888,7 @@
         • <strong>Total Robux Debt Owed:</strong> ${robuxTax.toLocaleString()} Robux<br>
         • <strong>Biometric Verdict:</strong> 100% Certified Lobby Dodger 👑
       `;
-      receiptMessage = `👑 [SHERIFF PARDON]: My thumb sprinted ${meters} meters across the screen (20/20 dodges), survived NASA's Cap-Scan, and racked up a ${robuxTax.toLocaleString()} Robux Fine for my AFK Pass!`;
+      receiptMessage = `👑 [SHERIFF PARDON]: My thumb sprinted ${meters} meters across the screen (20/20 dodges), cooled down a 420°C button, and racked up a ${robuxTax.toLocaleString()} Robux Fine for my AFK Pass!`;
     });
 
     acceptBtn.addEventListener('click', () => {
